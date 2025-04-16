@@ -10,6 +10,35 @@ We're gonna use: `codestral:22b` and `qwq:32b`, as Ollama, OpenWebUI, `load_bala
 
 **Alibaba qwq:32b** is the best open-source thinking model that can run on a 24 GB VRAM GPU. It's essentially the deepseek-R1 alternative for single-GPU setups.
 
+```mermaid
+classDiagram
+    class PrepStation {
+      +Download Docker image & installer  
+      +Export openwebui.docker  
+    }
+    class CodestralNode {
+      +24 GB GPU  
+      +Runs codestral:22b via llm_server_windows  
+    }
+    class QWQNode {
+      +24 GB GPU  
+      +Runs qwq:32b via llm_server_windows  
+    }
+    class LoadBalancer {
+      +ollama_load_balancer  
+      +Distributes model requests  
+    }
+    class WebUIServer {
+      +Docker & OpenWebUI  
+      +Serves UI on port 3000  
+    }
+
+    PrepStation --> WebUIServer : supplies openwebui.docker & installer
+    WebUIServer --> LoadBalancer : forwards model API calls
+    LoadBalancer --> CodestralNode : routes code-gen requests
+    LoadBalancer --> QWQNode : routes reasoning requests
+```
+
 ## Prepare
 
 1. Install https://github.com/BigBIueWhale/llm_server_windows/ on all of the AI computers (or just set up Ollama server if the computers are not running Windows 10/11). This will turn each of the AI computers into a powerful server without interfering with the normal CPU usage of those computers.
