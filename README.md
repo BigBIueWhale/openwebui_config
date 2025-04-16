@@ -2,7 +2,8 @@
 
 Let's say you're on an offline network, and you have multiple PCs on the network that have Nvidia GPUs with at least 24 gigabytes of VRAM each.
 
-You can't use [ChatGPT](chat.openai.com), how sad😭 Now you can set up your own AI chatbot for coding on your internal network!
+You can't use [ChatGPT](chat.openai.com) how sad😭\
+Now you can set up your own AI chatbot for coding on your internal network!
 
 We're gonna use: `codestral:22b` and `qwq:32b`, as Ollama, OpenWebUI, `load_balancer` created by BigBIueWhale, and `llm_server_windows` script suite created by BigBIueWhale.
 
