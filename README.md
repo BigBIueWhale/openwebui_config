@@ -12,31 +12,34 @@ We're gonna use: `codestral:22b` and `qwq:32b`, as Ollama, OpenWebUI, `load_bala
 
 ```mermaid
 classDiagram
-    class PrepStation {
-      +Download Docker image & installer  
-      +Export openwebui.docker  
+    class SlavePC1 {
+      Ollama Server  
+      codestral:22b & qwq:32b  
+      Nvidia A5000 (24 GB VRAM)
     }
-    class CodestralNode {
-      +24 GB GPU  
-      +Runs codestral:22b via llm_server_windows  
+    class SlavePC2 {
+      Ollama Server  
+      codestral:22b & qwq:32b  
+      Nvidia A5000 (24 GB VRAM)
     }
-    class QWQNode {
-      +24 GB GPU  
-      +Runs qwq:32b via llm_server_windows  
+    class SlavePC3 {
+      Ollama Server  
+      codestral:22b & qwq:32b  
+      Nvidia A5000 (24 GB VRAM)
     }
     class LoadBalancer {
-      +ollama_load_balancer  
-      +Distributes model requests  
+      ollama_load_balancer  
+      Distributes API requests
     }
     class WebUIServer {
-      +Docker & OpenWebUI  
-      +Serves UI on port 3000  
+      Docker & OpenWebUI  
+      Serves UI on port 3000
     }
 
-    PrepStation --> WebUIServer : supplies openwebui.docker & installer
-    WebUIServer --> LoadBalancer : forwards model API calls
-    LoadBalancer --> CodestralNode : routes code-gen requests
-    LoadBalancer --> QWQNode : routes reasoning requests
+    WebUIServer --> LoadBalancer : GET /api/show & /api/tags
+    LoadBalancer --> SlavePC1 : routes inference
+    LoadBalancer --> SlavePC2 : routes inference
+    LoadBalancer --> SlavePC3 : routes inference
 ```
 
 ## Prepare
