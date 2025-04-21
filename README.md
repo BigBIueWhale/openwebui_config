@@ -45,7 +45,7 @@ classDiagram
 
 ## Prepare
 
-1. Install https://github.com/BigBIueWhale/llm_server_windows/ on all of the AI computers (or just set up Ollama server if the computers are not running Windows 10/11). This will turn each of the AI computers into a powerful server without interfering with the normal CPU usage of those computers.
+1. Install https://github.com/BigBIueWhale/llm_server_windows/ on all of the AI computers (or just set up Ollama server if the computers are not running Windows 10/11). This will turn each of the AI computers into a powerful server. Use models `ollama pull qwq` and `ollama pull codestral:22b`. Ollama chooses the `q4_K_M` quantization by default.
 
 2. Choose a PC on the local network to be the load balancer- configure https://github.com/BigBIueWhale/ollama_load_balancer/ on that PC. Specify in the CLI arguments the IP addresses of each of the AI computers, and give them names. Set this Rust executable to run on boot.
 
