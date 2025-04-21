@@ -168,6 +168,7 @@ classDiagram
 
 16. Customize model descriptions to:
     | Model         | Description                       |
+    | :------------ | :-------------------------------- |
     | codestral:22b | 30k context- Small + Fast         |
     | qwq:32b       | 12k context- Think + Code         |
     | qwq:32b_high  | 14k context- Best & Slowest coder |
