@@ -45,11 +45,15 @@ classDiagram
 
 ## Prepare
 
-1. Install https://github.com/BigBIueWhale/llm_server_windows/ on all of the AI computers (or just set up Ollama server if the computers are not running Windows 10/11). This will turn each of the AI computers into a powerful server. Use models `ollama pull qwq:32b` and `ollama pull codestral:22b`. Ollama chooses the `q4_K_M` quantization by default.
+1. Install https://github.com/BigBIueWhale/llm_server_windows/ on all of the AI computers (or just set up Ollama server if the computers are not running Windows 10/11). This will turn each of the AI computers into a powerful server.
 
-2. Choose a PC on the local network to be the load balancer- configure https://github.com/BigBIueWhale/ollama_load_balancer/ on that PC. Specify in the CLI arguments the IP addresses of each of the AI computers, and give them names. Set this Rust executable to run on boot.
+2. When preparing `llm_server_windows` project, use online computer to create an `.ollama` folder with `ollama pull qwq:32b` and `ollama pull codestral:22b`. Ollama chooses the `q4_K_M` quantization by default.
 
-3. Choose a PC on the local network on which to install Docker. This PC will be the OpenWebUI server.
+3. In `llm_server_windows/.ollama`, copy `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b` to create an additional identical file: `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b_high`. This will allow us to create two separate configs for the same qwq:32b model- which will appear as two separate models in the model selection dropdown.
+
+4. Choose a PC on the local network to be the load balancer- configure https://github.com/BigBIueWhale/ollama_load_balancer/ on that PC. Specify in the CLI arguments the IP addresses of each of the AI computers, and give them names. Set this Rust executable to run on boot.
+
+5. Choose a PC on the local network on which to install Docker. This PC will be the OpenWebUI server.
 
 ## Downloads
 
@@ -95,31 +99,66 @@ classDiagram
 
 1. Open Google Chrome at http://127.0.0.1:3000 with your admin login credentials.
 
-2. Navigate to `Settings` -> `Admin Settings` -> `Interface` -> `Set Task Model` -> `Local Models` and change the dropdown value from `Current Model` to `codestral:22b`, **then click Save** on the bottom right. This is the model Ollama is gonna use for generating a title for each conversation. Reasoning models are no good for this task so it would cause https://github.com/BigBIueWhale/ollama_load_balancer/ to report errors.
+2. Navigate to `Settings` -> `Admin Settings` -> `Interface` -> `Set Task Model` -> `Local Models` and change the dropdown value from `Current Model` to `codestral:22b`, **then click Save** at the bottom right. This is the model Ollama is gonna use for generating a title for each conversation. Reasoning models are no good for this task so it would cause https://github.com/BigBIueWhale/ollama_load_balancer/ to report errors.
 
 3. In the same `Admin Settings` page, navigate to `Code Execution` -> `Enable Code Interpreter` and turn it off. The models just don't understand it.
 
-4. Stay in `Code Execution` and navigate to `Enable Code Execution`. Keep it on and make sure `Code Execution Engine` is set to `pyodide`, **then click Save** on the bottom right. This will allow users to press `run code` on any code block that the LLM responds with. Matplotlib visualizations are supported and shown inline.
+4. Stay in `Code Execution` and navigate to `Enable Code Execution`. Keep it on and make sure `Code Execution Engine` is set to `pyodide`, **then click Save** at the bottom right. This will allow users to press `run code` on any code block that the LLM responds with. Matplotlib visualizations are supported and shown inline.
 
-5. In the same `Admin Settings` page, navigate to `General` -> `Authentication`. Change the dropdown of `Default User Role` from `pending` to `user`. Turn on toggle switch `Enable New Sign Ups`, **then click Save** on the bottom right.
+5. In the same `Admin Settings` page, navigate to `General` -> `Authentication`. Change the dropdown of `Default User Role` from `pending` to `user`. Turn on toggle switch `Enable New Sign Ups`, **then click Save** at the bottom right.
 
-6. In the same `Admin Settings` page, navigate to `Models`. A list of models will appear- fetched from the Ollama server via the load balancer. The models in the list:
+6. In the same `Admin Settings` page, navigate to `Evaluations` and turn off `Arena Models`, then click `Save`, **then click Save** at the bottom right.
+
+7. In the same `Admin Settings` page, navigate to `Models`. A list of models will appear- fetched from the Ollama server via the load balancer. The models in the list:
     ```txt
     codestral:22b
     qwq:32b
+    qwq:32b_high
     ```
 
-7. Click on `codestral:22b` and change `Visiblity` dropdown from `Private` to `Public`. Turn off `Vision` and `Citations` capabilities. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
+8. Click on `codestral:22b` and change `Visiblity` dropdown from `Private` to `Public`. Turn off `Vision` and `Citations` capabilities. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
 
-8. Permanently customize `codestral:22b` model parameters to have `context length 30000`, `num_predict 29000`, `temperature 0.1`, `Top P 0.95`, `repeat_penalty 1.15`. These values are taken from https://medium.com/@givkashi/exploring-codestral-a-code-generation-model-from-mistral-ai-c94e18a551c3 and are actually very important so the model produces working code.
+9.  Permanently customize `codestral:22b` model parameters to have the following values:
 
-9. Scroll to the bottom of the `codestral:22b` Model Params page and click `Save & Update` at the bottom.
+    | Parameter        | Value  |
+    | :--------------- | :----- |
+    | `Context Length` | 30000  |
+    | `num_predict`    | 29000  |
+    | `Temperature`    | 0.1    |
+    | `Top P`          | 0.95   |
+    | `Repeat Penalty` | 1.15   |
 
-10. Scroll to the top of the page and click on `Back`. Now click `qwq:32b` and change `Visiblity` dropdown from `Private` to `Public`. Turn off `Vision` and `Citations` capabilities. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
+    These values are taken from https://medium.com/@givkashi/exploring-codestral-a-code-generation-model-from-mistral-ai-c94e18a551c3 and are actually very important so the model produces working code.
 
-11. Permanently customize `qwq:32b` model parameters to have `Context Length: 8192`, `num_predict: -1`, `Top K: 40`, `Top P: 0.95`, `Min P: 0`, `Repeat Penalty: 1`. We don't want to set the context length too high because then Ollama might decide to start using the CPU instead of the GPU. There might be additional parameters to make the model produce better code, but Ollama already customizes some of [the parameters for us](https://ollama.com/library/qwq/blobs/e5229acc2492), and https://chat.qwen.ai/ (which presumably has the correct parameters) doesn't seem that much better than the version we have offline.
+10. Scroll to the bottom of the `codestral:22b` Model Params page and click `Save & Update` at the bottom.
 
-12. Scroll to the bottom of the `qwq:32b` Model Params page and click `Save & Update` at the bottom.
+11. Scroll to the top of the page and click on `Back`. Now click `qwq:32b` and change `Visiblity` dropdown from `Private` to `Public`. Turn off `Vision` and `Citations` capabilities. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
+
+12. Permanently customize `qwq:32b` model parameters to have the following values:
+
+    | Parameter        | Value |
+    | :--------------- | :---- |
+    | `Context Length` | 10240 |
+    | `num_predict`    | -1    |
+    | `Top K`          | 40    |
+    | `Top P`          | 0.95  |
+    | `Min P`          | 0     |
+    | `Repeat Penalty` | 1     |
+    | `Temperature`    | 0.6   |
+
+    We don't want to set the `Context Length` too high because then Ollama might decide to start using the CPU instead of the GPU. At `Context Length` 8192 tokens, Ollama already might start offloading some layers to the CPU due to low VRAM.
+
+    The issue is, qwq might use 6000+ tokens during its thinking stage.
+
+13. Scroll to the bottom of the `qwq:32b` Model Params page and click `Save & Update` at the bottom.
+
+14. Permanently customize `qwq:32b_high` in the exact same way as `qwq:32b`, except choose the following parameters differently:
+
+    | Parameter        | Value |
+    | :--------------- | :---- |
+    | `Context Length` | 16384 |
+
+    This means the user can choose to use the slower model and get extra context length.
 
 ## Access
 
