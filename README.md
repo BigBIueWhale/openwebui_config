@@ -117,7 +117,7 @@ classDiagram
 
 10. Scroll to the top of the page and click on `Back`. Now click `qwq:32b` and change `Visiblity` dropdown from `Private` to `Public`. Turn off `Vision` and `Citations` capabilities. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
 
-11. Permanently customize `qwq:32b` model parameters to have `Context Length: 14000`, `num_predict: 13000`, `Top K: 40`, `Top P: 0.95`, `Min P: 0`, `Repeat Penalty: 1`. We don't want to set the context length too high because then Ollama might decide to start using the CPU instead of the GPU. There might be additional parameters to make the model produce better code, but Ollama already customizes some of [the parameters for us](https://ollama.com/library/qwq/blobs/e5229acc2492), and https://chat.qwen.ai/ (which presumably has the correct parameters) doesn't seem that much better than the version we have offline.
+11. Permanently customize `qwq:32b` model parameters to have `Context Length: 8192`, `num_predict: -1`, `Top K: 40`, `Top P: 0.95`, `Min P: 0`, `Repeat Penalty: 1`. We don't want to set the context length too high because then Ollama might decide to start using the CPU instead of the GPU. There might be additional parameters to make the model produce better code, but Ollama already customizes some of [the parameters for us](https://ollama.com/library/qwq/blobs/e5229acc2492), and https://chat.qwen.ai/ (which presumably has the correct parameters) doesn't seem that much better than the version we have offline.
 
 12. Scroll to the bottom of the `qwq:32b` Model Params page and click `Save & Update` at the bottom.
 
