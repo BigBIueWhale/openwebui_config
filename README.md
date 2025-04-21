@@ -138,7 +138,7 @@ classDiagram
 
     | Parameter        | Value |
     | :--------------- | :---- |
-    | `Context Length` | 10240 |
+    | `Context Length` | 12000 |
     | `num_predict`    | -1    |
     | `Top K`          | 40    |
     | `Top P`          | 0.95  |
@@ -148,7 +148,7 @@ classDiagram
 
     We don't want to set the `Context Length` too high because then Ollama might decide to start using the CPU instead of the GPU. At `Context Length` 8192 tokens, Ollama already might start offloading some layers to the CPU due to low VRAM.
 
-    The issue is, qwq might use 6000+ tokens during its thinking stage.
+    The issue is, qwq might use 8000+ tokens during its thinking stage.
 
 13. Scroll to the bottom of the `qwq:32b` Model Params page and click `Save & Update` at the bottom.
 
@@ -156,9 +156,9 @@ classDiagram
 
     | Parameter        | Value |
     | :--------------- | :---- |
-    | `Context Length` | 16384 |
+    | `Context Length` | 14000 |
 
-    This means the user can choose to use the slower model and get extra context length.
+    This means the user can choose to use the slower model to get extra context length.
 
 ## Access
 
