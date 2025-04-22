@@ -143,7 +143,7 @@ classDiagram
     | `Top K`          | 40    |
     | `Top P`          | 0.95  |
     | `Min P`          | 0     |
-    | `Repeat Penalty` | 1     |
+    | `Repeat Penalty` | 1.1   |
     | `Temperature`    | 0.6   |
 
     We don't want to set the `Context Length` too high because then Ollama might decide to start using the CPU instead of the GPU. At `Context Length` 8192 tokens, Ollama already might start offloading some layers to the CPU due to low VRAM.
@@ -157,10 +157,12 @@ classDiagram
     | Parameter        | Value |
     | :--------------- | :---- |
     | `Context Length` | 14000 |
+    | `Repeat Penalty` | 1     |
 
-    The additional context is to accomodate the longer thinking time.
+    The additional context is to accomodate the longer thinking time.\
+    We also disable the repeat penalty (value 1) so the model has all the time in the world to think.
 
-15. `qwq:32b` overthinks by default. Users don't like waiting 10 minutes for an answer, so customize `qwq:32b` to keep its answers brief. From the `Admin page` -> `Models` choose to edit specifically `qwq:32b` and copy-paste this system prompt:
+16. `qwq:32b` overthinks by default. Users don't like waiting 10 minutes for an answer, so customize `qwq:32b` to keep its answers brief. From the `Admin page` -> `Models` choose to edit specifically `qwq:32b` and copy-paste this system prompt:
     https://www.reddit.com/r/LocalLLaMA/comments/1j4v3fi/comment/mgd2t3r
     ```txt
     Low Reasoning Effort: You have extremely limited time to think and respond to the user’s query. Every additional second of processing and reasoning incurs a significant resource cost, which could affect efficiency and effectiveness. Your task is to prioritize speed without sacrificing essential clarity or accuracy. Provide the most direct and concise answer possible. Avoid unnecessary steps, reflections, verification, or refinements UNLESS ABSOLUTELY NECESSARY. Your primary goal is to deliver a quick, clear and correct response.
