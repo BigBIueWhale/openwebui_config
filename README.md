@@ -161,12 +161,13 @@ classDiagram
     The additional context is to accomodate the longer thinking time.
 
 15. `qwq:32b` overthinks by default. Users don't like waiting 10 minutes for an answer, so customize `qwq:32b` to keep its answers brief. From the `Admin page` -> `Models` choose to edit specifically `qwq:32b` and copy-paste this system prompt:
+    https://www.reddit.com/r/LocalLLaMA/comments/1j4v3fi/comment/mgd2t3r
     ```txt
     Low Reasoning Effort: You have extremely limited time to think and respond to the user’s query. Every additional second of processing and reasoning incurs a significant resource cost, which could affect efficiency and effectiveness. Your task is to prioritize speed without sacrificing essential clarity or accuracy. Provide the most direct and concise answer possible. Avoid unnecessary steps, reflections, verification, or refinements UNLESS ABSOLUTELY NECESSARY. Your primary goal is to deliver a quick, clear and correct response.
     ```
     And scroll down to click `Save & Update`. For `qwq:32b_high` system prompt should stay blank- which lets the model decide how long to think.
 
-16. Customize model descriptions to:
+17. Customize model descriptions to:
     | Model         | Description                       |
     | :------------ | :-------------------------------- |
     | codestral:22b | 30k context- Small + Fast         |
