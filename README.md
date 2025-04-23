@@ -110,14 +110,14 @@ TODO: Add webui version information.
 
 6. In the same `Admin Settings` page, navigate to `Evaluations` and turn off `Arena Models`, then click `Save`, **then click Save** at the bottom right.
 
-7. In the same `Admin Settings` page, navigate to `Models`. A list of models will appear- fetched from the Ollama server via the load balancer. The models in the list:
+7. In the same `Admin Settings` page, navigate to `Documents` and make the document processing be fully in-context instead of the default of doing a weird tokenization that doesn't work.
+
+8. In the same `Admin Settings` page, navigate to `Models`. A list of models will appear- fetched from the Ollama server via the load balancer. The models in the list:
     ```txt
     codestral:22b
     qwq:32b
     qwq:32b_high
     ```
-
-8. In the same `Admin Settings` page, navigate to `Documents` and make the document processing be fully in-context instead of the default of doing a weird tokenization that doesn't work.
 
 9. Click on `codestral:22b` and change `Visiblity` dropdown from `Private` to `Public`. Turn off `Vision` and `Citations` capabilities. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
 
