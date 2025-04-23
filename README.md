@@ -51,7 +51,7 @@ classDiagram
 
 3. In `llm_server_windows/.ollama`, copy `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b` to create an additional identical file: `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b_high`. This will allow us to create two separate configs for the same qwq:32b model- which will appear as two separate models in the model selection dropdown.
 
-4. Choose a PC on the local network to be the load balancer- configure https://github.com/BigBIueWhale/ollama_load_balancer/ on that PC. Specify in the CLI arguments the IP addresses of each of the AI computers, and give them names. Set this Rust executable to run on boot.
+4. Run an [ollama_load_balancer](https://github.com/BigBIueWhale/ollama_load_balancer/) docker instance on the local network. Use the dockerfile configuration provided. Specify in the CLI arguments the IP addresses of each of the AI computers, and give them names. Make sure to pass flag "--timeout 60" to allow for prompt ingestion delays. Set this Rust executable to run on boot.
 
 5. Choose a PC on the local network on which to install Docker. This PC will be the OpenWebUI server.
 
@@ -116,9 +116,11 @@ classDiagram
     qwq:32b_high
     ```
 
-8. Click on `codestral:22b` and change `Visiblity` dropdown from `Private` to `Public`. Turn off `Vision` and `Citations` capabilities. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
+8. In the same `Admin Settings` page, navigate to `Documents` and make the document processing be fully in-context instead of the default of doing a weird tokenization that doesn't work.
 
-9.  Permanently customize `codestral:22b` model parameters to have the following values:
+9. Click on `codestral:22b` and change `Visiblity` dropdown from `Private` to `Public`. Turn off `Vision` and `Citations` capabilities. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
+
+10.  Permanently customize `codestral:22b` model parameters to have the following values:
 
     | Parameter        | Value  |
     | :--------------- | :----- |
@@ -130,11 +132,11 @@ classDiagram
 
     These values are taken from https://medium.com/@givkashi/exploring-codestral-a-code-generation-model-from-mistral-ai-c94e18a551c3 and are actually very important so the model produces working code.
 
-10. Scroll to the bottom of the `codestral:22b` Model Params page and click `Save & Update` at the bottom.
+11. Scroll to the bottom of the `codestral:22b` Model Params page and click `Save & Update` at the bottom.
 
-11. Scroll to the top of the page and click on `Back`. Now click `qwq:32b` and change `Visiblity` dropdown from `Private` to `Public`. Turn off `Vision` and `Citations` capabilities. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
+12. Scroll to the top of the page and click on `Back`. Now click `qwq:32b` and change `Visiblity` dropdown from `Private` to `Public`. Turn off `Vision` and `Citations` capabilities. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
 
-12. Permanently customize `qwq:32b` model parameters to have the following values:
+13. Permanently customize `qwq:32b` model parameters to have the following values:
 
     | Parameter        | Value |
     | :--------------- | :---- |
@@ -150,9 +152,9 @@ classDiagram
 
     The issue is, qwq might use 8000+ tokens during its thinking stage.
 
-13. Scroll to the bottom of the `qwq:32b` Model Params page and click `Save & Update` at the bottom.
+14. Scroll to the bottom of the `qwq:32b` Model Params page and click `Save & Update` at the bottom.
 
-14. Permanently customize `qwq:32b_high` in the exact same way as `qwq:32b`, except choose the following parameters differently:
+15. Permanently customize `qwq:32b_high` in the exact same way as `qwq:32b`, except choose the following parameters differently:
 
     | Parameter        | Value |
     | :--------------- | :---- |
@@ -160,14 +162,14 @@ classDiagram
 
     The additional context is to accomodate the longer thinking time.
 
-15. `qwq:32b` overthinks by default. Users don't like waiting 10 minutes for an answer, so customize `qwq:32b` to keep its answers brief. From the `Admin page` -> `Models` choose to edit specifically `qwq:32b` and copy-paste this system prompt:
+16. `qwq:32b` overthinks by default. Users don't like waiting 10 minutes for an answer, so customize `qwq:32b` to keep its answers brief. From the `Admin page` -> `Models` choose to edit specifically `qwq:32b` and copy-paste this system prompt:
     https://www.reddit.com/r/LocalLLaMA/comments/1j4v3fi/comment/mgd2t3r
     ```txt
     Low Reasoning Effort: You have extremely limited time to think and respond to the user’s query. Every additional second of processing and reasoning incurs a significant resource cost, which could affect efficiency and effectiveness. Your task is to prioritize speed without sacrificing essential clarity or accuracy. Provide the most direct and concise answer possible. Avoid unnecessary steps, reflections, verification, or refinements UNLESS ABSOLUTELY NECESSARY. Your primary goal is to deliver a quick, clear and correct response.
     ```
     And scroll down to click `Save & Update`. For `qwq:32b_high` system prompt should stay blank- which lets the model decide how long to think.
 
-16. Customize model descriptions to:
+17. Customize model descriptions to:
     | Model         | Description                       |
     | :------------ | :-------------------------------- |
     | codestral:22b | 30k context- Small + Fast         |
