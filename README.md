@@ -63,8 +63,7 @@ classDiagram
 
 3. Launch docker and set it up- install WSL2 if needed. Leave docker open while running docker commands in CMD.
 
-4. Open CMD and run command `docker pull ghcr.io/open-webui/open-webui:main` as is mentioned in https://docs.openwebui.com/getting-started/quick-start/\
-TODO: Add webui version information.
+4. Open CMD and run command `docker pull ghcr.io/open-webui/open-webui:main`. I used OpenWebUI version 0.6.4, command is taken from: https://docs.openwebui.com/getting-started/quick-start/
 
 6. Open a CMD window and navigate to a known folder, then run `docker save -o openwebui.docker ghcr.io/open-webui/open-webui:main` as mentioned [in forums online](https://serverfault.com/a/718470/1257167). This might take a few minutes.
 
