@@ -51,7 +51,7 @@ classDiagram
 
 3. In `llm_server_windows/.ollama`, copy `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b` to create an additional identical file: `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b_high`. This will allow us to create two separate configs for the same qwq:32b model- which will appear as two separate models in the model selection dropdown.
 
-4. Run an [ollama_load_balancer](https://github.com/BigBIueWhale/ollama_load_balancer/) docker instance on the local network. Use the dockerfile configuration provided. Specify in the CLI arguments the IP addresses of each of the AI computers, and give them names. Make sure to pass flag "--timeout 60" to allow for prompt ingestion delays. Set this Rust executable to run on boot.
+4. Run an [ollama_load_balancer](https://github.com/BigBIueWhale/ollama_load_balancer/) docker instance on the local network. Use the [dockerfile configuration](https://github.com/BigBIueWhale/ollama_load_balancer/blob/master/README.md#docker) provided. Specify in the CLI arguments the IP addresses of each of the AI computers, and give them names. Make sure to pass flag "--timeout 60" to allow for prompt ingestion delays. Set this Rust executable to run on boot.
 
 5. Choose a PC on the local network on which to install Docker. This PC will be the OpenWebUI server.
 
@@ -63,13 +63,14 @@ classDiagram
 
 3. Launch docker and set it up- install WSL2 if needed. Leave docker open while running docker commands in CMD.
 
-4. Open CMD and run command `docker pull ghcr.io/open-webui/open-webui:main` as is mentioned in https://docs.openwebui.com/getting-started/quick-start/
+4. Open CMD and run command `docker pull ghcr.io/open-webui/open-webui:main` as is mentioned in https://docs.openwebui.com/getting-started/quick-start/\
+TODO: Add webui version information.
 
-5. Open a CMD window and navigate to a known folder, then run `docker save -o openwebui.docker ghcr.io/open-webui/open-webui:main` as mentioned [in forums online](https://serverfault.com/a/718470/1257167). This might take a few minutes.
+6. Open a CMD window and navigate to a known folder, then run `docker save -o openwebui.docker ghcr.io/open-webui/open-webui:main` as mentioned [in forums online](https://serverfault.com/a/718470/1257167). This might take a few minutes.
 
-6. Take the newly created `openwebui.docker` (4.5+ gigabytes)- with you to the offline computer.
+7. Take the newly created `openwebui.docker` (4.5+ gigabytes)- with you to the offline computer.
 
-7. Take that same docker installer `Docker Desktop Installer.exe` with you to the offline computer.
+8. Take that same docker installer `Docker Desktop Installer.exe` with you to the offline computer.
 
 ## Setup OpenWebUI
 
