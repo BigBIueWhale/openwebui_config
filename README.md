@@ -186,6 +186,7 @@ Multiple users will be able to use the UI at the same time!
 
 I want to add support for the models-
 
-- **GLM-4-32B-0414** https://github.com/THUDM/GLM-4 released April 2025. Specifically- the non-thinking version seems to be a very good coding model for creating code for graphical user interfaces.
+- **GLM-4-32B-0414** https://github.com/THUDM/GLM-4 released April 2025. Specifically- the non-thinking version seems to be a very good coding model for creating code for graphical user interfaces.\
+  Will have to update to `Ollama version 0.6.5 (April 2025)` https://www.reddit.com/r/LocalLLaMA/comments/1k4w9p2/i_uploaded_glm432b0414_glmz132b0414_q4_k_m_to/
 
 - **Gemma-3-27B-it** https://huggingface.co/google/gemma-3-27b-it non-thinking, multimodal. Able to generate code for quite a good and stable p5.js tree. I'm very impressed by this model from Google.
