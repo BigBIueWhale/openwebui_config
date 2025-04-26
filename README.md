@@ -188,4 +188,4 @@ I want to add support for the models-
 
 - **GLM-4-32B-0414** https://github.com/THUDM/GLM-4 released April 2025. Specifically- the non-thinking version seems to be a very good coding model for creating code for graphical user interfaces.
 
-- **Gemma-3-27B-it** https://huggingface.co/google/gemma-3-27b-it- non-thinking, multimodal. Able to generate code for quite a good and stable p5.js tree. I'm very impressed by this model from Google.
+- **Gemma-3-27B-it** https://huggingface.co/google/gemma-3-27b-it non-thinking, multimodal. Able to generate code for quite a good and stable p5.js tree. I'm very impressed by this model from Google.
