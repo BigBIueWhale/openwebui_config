@@ -126,15 +126,15 @@ I used `OllamaSetup.exe` version 0.6.5.
 
 10.  Permanently customize `codestral:22b` model parameters to have the following values:
 
-    | Parameter        | Value  |
-    | :--------------- | :----- |
-    | `Context Length` | 30000  |
-    | `num_predict`    | 29000  |
-    | `Temperature`    | 0.1    |
-    | `Top P`          | 0.95   |
-    | `Repeat Penalty` | 1.15   |
+        | Parameter        | Value  |
+        | :--------------- | :----- |
+        | `Context Length` | 30000  |
+        | `num_predict`    | 29000  |
+        | `Temperature`    | 0.1    |
+        | `Top P`          | 0.95   |
+        | `Repeat Penalty` | 1.15   |
 
-    These values are taken from https://medium.com/@givkashi/exploring-codestral-a-code-generation-model-from-mistral-ai-c94e18a551c3 and are actually very important so the model produces working code.
+        These values are taken from https://medium.com/@givkashi/exploring-codestral-a-code-generation-model-from-mistral-ai-c94e18a551c3 and are actually very important so the model produces working code.
 
 11. Scroll to the bottom of the `codestral:22b` Model Params page and click `Save & Update` at the bottom.
 
@@ -177,12 +177,12 @@ I used `OllamaSetup.exe` version 0.6.5.
 
 18.  Permanently customize `gemma3:27b-it-q4_K_M` model parameters to have the following values:
 
-    | Parameter        | Value  |
-    | :--------------- | :----- |
-    | `Context Length` | 16384  |
-    | `num_predict`    | 8192   |
-    | `Temperature`    | 1.0    |
-    | `Min P`          | 0      |
+        | Parameter        | Value |
+        | :--------------- | :---- |
+        | `Context Length` | 16384 |
+        | `num_predict`    | 8192  |
+        | `Temperature`    | 1.0   |
+        | `Min P`          | 0     |
 
     num_predict is set to 8192 because Gemma natively has a [Total output context of 8192 tokens](https://huggingface.co/google/gemma-3-4b-it/blob/main/README.md#inputs-and-outputs). `Context Length` is to fit in a 24 GB VRAM GPU. The other parameter values are taken from https://docs.unsloth.ai/basics/tutorial-how-to-run-and-fine-tune-gemma-3. For some reason Ollama doesn't have the min-p param set by default, most of the required parameters are set by [Ollama's config file](https://ollama.com/library/gemma3:27b-it-q4_K_M/blobs/3116c5225075) so we don't need to explicitly set them.
 
@@ -191,7 +191,7 @@ I used `OllamaSetup.exe` version 0.6.5.
 20. Scroll to the bottom of the `gemma3:27b` Model Params page and click `Save & Update` at the bottom.
 
 21. Customize model descriptions to:
-    | Model         | Description                       |
+    | Model         | Description                                                                    |
     | :------------ | :----------------------------------------------------------------------------- |
     | codestral:22b | 30k context- Mistral AI coding model released May 2024                         |
     | gemma3:27b    | 16k context- Google multilingual multimodal (vision) model released March 2025 |
