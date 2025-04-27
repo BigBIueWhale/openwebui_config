@@ -173,14 +173,30 @@ I used `OllamaSetup.exe` version 0.6.5.
     ```
     And scroll down to click `Save & Update`. For `qwq:32b_high` system prompt should stay blank- which lets the model decide how long to think.
 
-17. 
+17. Click on `gemma3:27b-it-q4_K_M` and change `Visiblity` dropdown from `Private` to `Public`. Under "capabilities", keep on `Vision` and turn off `Citations`. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
 
-17. Customize model descriptions to:
+18.  Permanently customize `gemma3:27b-it-q4_K_M` model parameters to have the following values:
+
+    | Parameter        | Value  |
+    | :--------------- | :----- |
+    | `Context Length` | 16384  |
+    | `num_predict`    | 8192   |
+    | `Temperature`    | 1.0    |
+    | `Min P`          | 0      |
+
+    num_predict is set to 8192 because Gemma natively has a [Total output context of 8192 tokens](https://huggingface.co/google/gemma-3-4b-it/blob/main/README.md#inputs-and-outputs). `Context Length` is to fit in a 24 GB VRAM GPU. The other parameter values are taken from https://docs.unsloth.ai/basics/tutorial-how-to-run-and-fine-tune-gemma-3. For some reason Ollama doesn't have the min-p param set by default, most of the required parameters are set by [Ollama's config file](https://ollama.com/library/gemma3:27b-it-q4_K_M/blobs/3116c5225075) so we don't need to explicitly set them.
+
+19. Change model name from `gemma3:27b-it-q4_K_M` to `gemma3:27b` for naming consistency.
+
+20. Scroll to the bottom of the `gemma3:27b` Model Params page and click `Save & Update` at the bottom.
+
+21. Customize model descriptions to:
     | Model         | Description                       |
-    | :------------ | :-------------------------------- |
-    | codestral:22b | 30k context- Small + Fast         |
-    | qwq:32b       | 8k context- Think + Code          |
-    | qwq:32b_high  | 14k context- Deep Think + Code    |
+    | :------------ | :----------------------------------------------------------------------------- |
+    | codestral:22b | 30k context- Mistral AI coding model released May 2024                         |
+    | gemma3:27b    | 16k context- Google multilingual multimodal (vision) model released March 2025 |
+    | qwq:32b       | 8k context (less thinking)- Alibaba thinking model released March 2025         |
+    | qwq:32b_high  | 14k context (slower)- Alibaba thinking model released March 2025               |
 
 ## Access
 
