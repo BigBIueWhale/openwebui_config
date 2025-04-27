@@ -7,7 +7,7 @@ Now you can set up your own AI chatbot for coding on your internal network!
 
 We're gonna use: `codestral:22b`,  `qwq:32b` and `gemma3:27b-it-q4_K_M`, all models running on Ollama. We're gonna setup OpenWebUI, and `load_balancer` created by BigBIueWhale, and `llm_server_windows` script suite created by BigBIueWhale.
 
-**Codestral:22b (2024 model)** is good at producing code that actually works (including [create a realistic looking tree in p5.js](./doc/codestral_p5js_tree.png)), when set up with the correct parameters.
+**Codestral:22b (2024 model)** is good at producing code that actually works, when set up with the correct parameters.
 
 **Alibaba qwq:32b** is the best open-source thinking model that can run on a 24 GB VRAM GPU. It's essentially the deepseek-R1 alternative for single-GPU setups.
 
@@ -132,9 +132,9 @@ I used `OllamaSetup.exe` version 0.6.5.
         | `num_predict`    | 29000  |
         | `Temperature`    | 0.1    |
         | `Top P`          | 0.95   |
-        | `Repeat Penalty` | 1.15   |
+        | `Repeat Penalty` | 1.04   |
 
-        These values are taken from https://medium.com/@givkashi/exploring-codestral-a-code-generation-model-from-mistral-ai-c94e18a551c3 and are actually very important so the model produces working code.
+        These values are taken from https://medium.com/@givkashi/exploring-codestral-a-code-generation-model-from-mistral-ai-c94e18a551c3 and are actually very important so the model produces working code. I decided to change `Pepeat Penalty` to 1.04 so the model becomes less lazy.
 
 11. Scroll to the bottom of the `codestral:22b` Model Params page and click `Save & Update` at the bottom.
 
