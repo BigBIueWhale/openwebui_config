@@ -52,7 +52,7 @@ I used `OllamaSetup.exe` version 0.6.5.
 
 3. When preparing `llm_server_windows` project, use online computer to create an `.ollama` folder with `ollama pull qwq:32b` and `ollama pull codestral:22b` and `ollama pull gemma3:27b-it-q4_K_M`. Ollama chooses the `q4_K_M` quantization by default.
 
-4. In `llm_server_windows/.ollama`, copy `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b` to create an additional identical file: `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b_high`. This will allow us to create two separate configs for the same qwq:32b model- which will appear as two separate models in the model selection dropdown.
+4. In `llm_server_windows/.ollama`, copy `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b` to create an additional identical file: `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b-high`. This will allow us to create two separate configs for the same qwq:32b model- which will appear as two separate models in the model selection dropdown.
 
 5. Choose a PC on the local network on which to install Docker. This PC will be the OpenWebUI server and the load balancer.
 
@@ -119,7 +119,7 @@ I used `OllamaSetup.exe` version 0.6.5.
     codestral:22b
     gemma3:27b-it-q4_K_M
     qwq:32b
-    qwq:32b_high
+    qwq:32b-high
     ```
 
 9. Click on `codestral:22b` and change `Visiblity` dropdown from `Private` to `Public`. Turn off `Vision` and `Citations` capabilities. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
@@ -158,7 +158,7 @@ I used `OllamaSetup.exe` version 0.6.5.
 
 14. Scroll to the bottom of the `qwq:32b` Model Params page and click `Save & Update` at the bottom.
 
-15. Permanently customize `qwq:32b_high` in the exact same way as `qwq:32b`, except choose the following parameters differently:
+15. Permanently customize `qwq:32b-high` in the exact same way as `qwq:32b`, except choose the following parameters differently:
 
     | Parameter        | Value |
     | :--------------- | :---- |
@@ -171,7 +171,7 @@ I used `OllamaSetup.exe` version 0.6.5.
     ```txt
     Low Reasoning Effort: You have extremely limited time to think and respond to the user’s query. Every additional second of processing and reasoning incurs a significant resource cost, which could affect efficiency and effectiveness. Your task is to prioritize speed without sacrificing essential clarity or accuracy. Provide the most direct and concise answer possible. Avoid unnecessary steps, reflections, verification, or refinements UNLESS ABSOLUTELY NECESSARY. Your primary goal is to deliver a quick, clear and correct response.
     ```
-    And scroll down to click `Save & Update`. For `qwq:32b_high` system prompt should stay blank- which lets the model decide how long to think.
+    And scroll down to click `Save & Update`. For `qwq:32b-high` system prompt should stay blank- which lets the model decide how long to think.
 
 17. Click on `gemma3:27b-it-q4_K_M` and change `Visiblity` dropdown from `Private` to `Public`. Under "capabilities", keep on `Vision` and turn off `Citations`. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
 
@@ -194,7 +194,7 @@ I used `OllamaSetup.exe` version 0.6.5.
     | codestral:22b | 30k context- Mistral AI coding model released May 2024                         |
     | gemma3:27b    | 14k context- Google multilingual multimodal (vision) model released March 2025 |
     | qwq:32b       | 8k context (less thinking)- Alibaba thinking model released March 2025         |
-    | qwq:32b_high  | 14k context (slower)- Alibaba thinking model released March 2025               |
+    | qwq:32b-high  | 14k context (slower)- Alibaba thinking model released March 2025               |
 
 ## Access
 
