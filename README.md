@@ -184,7 +184,7 @@ I used `OllamaSetup.exe` version 0.6.5.
         | `Temperature`    | 1.0   |
         | `Min P`          | 0     |
 
-    num_predict is set to 8192 because Gemma natively has a [Total output context of 8192 tokens](https://huggingface.co/google/gemma-3-4b-it/blob/main/README.md#inputs-and-outputs). `Context Length` is to fit in a 24 GB VRAM GPU. The other parameter values are taken from https://docs.unsloth.ai/basics/tutorial-how-to-run-and-fine-tune-gemma-3. For some reason Ollama doesn't have the min-p param set by default, most of the required parameters are set by [Ollama's config file](https://ollama.com/library/gemma3:27b-it-q4_K_M/blobs/3116c5225075) so we don't need to explicitly set them.
+        num_predict is set to 8192 because Gemma natively has a [Total output context of 8192 tokens](https://huggingface.co/google/gemma-3-4b-it/blob/main/README.md#inputs-and-outputs). `Context Length` is to fit in a 24 GB VRAM GPU. The other parameter values are taken from https://docs.unsloth.ai/basics/tutorial-how-to-run-and-fine-tune-gemma-3. For some reason Ollama doesn't have the min-p param set by default, most of the required parameters are set by [Ollama's config file](https://ollama.com/library/gemma3:27b-it-q4_K_M/blobs/3116c5225075) so we don't need to explicitly set them.
 
 19. Change model name from `gemma3:27b-it-q4_K_M` to `gemma3:27b` for naming consistency.
 
