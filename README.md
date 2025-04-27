@@ -179,10 +179,10 @@ I used `OllamaSetup.exe` version 0.6.5.
 
         | Parameter        | Value |
         | :--------------- | :---- |
-        | `Context Length` | 16384 |
+        | `Context Length` | 14000 |
         | `num_predict`    | 8192  |
 
-        num_predict is set to 8192 because Gemma natively has a [Total output context of 8192 tokens](https://huggingface.co/google/gemma-3-4b-it/blob/main/README.md#inputs-and-outputs). `Context Length` is to fit in a 24 GB VRAM GPU. The other required parameters are set by [Ollama's config file](https://ollama.com/library/gemma3:27b-it-q4_K_M/blobs/3116c5225075) so we don't need to explicitly set them.
+        num_predict is set to 8192 because Gemma natively has a [Total output context of 8192 tokens](https://huggingface.co/google/gemma-3-4b-it/blob/main/README.md#inputs-and-outputs). `Context Length` value is set to fit in a 24 GB VRAM GPU. The other required parameters are set by [Ollama's config file](https://ollama.com/library/gemma3:27b-it-q4_K_M/blobs/3116c5225075) so we don't need to explicitly set them.
 
 19. Change model name from `gemma3:27b-it-q4_K_M` to `gemma3:27b` for naming consistency.
 
@@ -192,7 +192,7 @@ I used `OllamaSetup.exe` version 0.6.5.
     | Model         | Description                                                                    |
     | :------------ | :----------------------------------------------------------------------------- |
     | codestral:22b | 30k context- Mistral AI coding model released May 2024                         |
-    | gemma3:27b    | 16k context- Google multilingual multimodal (vision) model released March 2025 |
+    | gemma3:27b    | 14k context- Google multilingual multimodal (vision) model released March 2025 |
     | qwq:32b       | 8k context (less thinking)- Alibaba thinking model released March 2025         |
     | qwq:32b_high  | 14k context (slower)- Alibaba thinking model released March 2025               |
 
