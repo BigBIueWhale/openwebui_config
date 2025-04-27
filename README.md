@@ -5,27 +5,29 @@ Let's say you're on an offline network, and you have multiple PCs on the network
 You can't use [ChatGPT](chat.openai.com) how sad😭\
 Now you can set up your own AI chatbot for coding on your internal network!
 
-We're gonna use: `codestral:22b` and `qwq:32b`, as Ollama, OpenWebUI, `load_balancer` created by BigBIueWhale, and `llm_server_windows` script suite created by BigBIueWhale.
+We're gonna use: `codestral:22b`,  `qwq:32b` and `gemma3:27b-it-q4_K_M`, all models running on Ollama. We're gonna setup OpenWebUI, and `load_balancer` created by BigBIueWhale, and `llm_server_windows` script suite created by BigBIueWhale.
 
 **Codestral:22b (2024 model)** is good at producing code that actually works (including [create a realistic looking tree in p5.js](./doc/codestral_p5js_tree.png)), when set up with the correct parameters.
 
 **Alibaba qwq:32b** is the best open-source thinking model that can run on a 24 GB VRAM GPU. It's essentially the deepseek-R1 alternative for single-GPU setups.
 
+**gemma3 27b instruction-tuned** Google multilingual multimodal (vision) model released March 2025. The vision understanding makes it great at coding UIs.
+
 ```mermaid
 classDiagram
     class SlavePC1 {
       Ollama Server  
-      codestral:22b & qwq:32b  
+      LLMs
       Nvidia A5000 (24 GB VRAM)
     }
     class SlavePC2 {
       Ollama Server  
-      codestral:22b & qwq:32b  
+      LLMs  
       Nvidia A5000 (24 GB VRAM)
     }
     class SlavePC3 {
       Ollama Server  
-      codestral:22b & qwq:32b  
+      LLMs  
       Nvidia A5000 (24 GB VRAM)
     }
     class LoadBalancer {
@@ -48,7 +50,7 @@ classDiagram
 1. Install https://github.com/BigBIueWhale/llm_server_windows/ on all of the AI computers (or just set up Ollama server if the computers are not running Windows 10/11). This will turn each of the AI computers into a powerful server.\
 I used `OllamaSetup.exe` version 0.6.5.
 
-3. When preparing `llm_server_windows` project, use online computer to create an `.ollama` folder with `ollama pull qwq:32b` and `ollama pull codestral:22b`. Ollama chooses the `q4_K_M` quantization by default.
+3. When preparing `llm_server_windows` project, use online computer to create an `.ollama` folder with `ollama pull qwq:32b` and `ollama pull codestral:22b` and `ollama pull gemma3:27b-it-q4_K_M`. Ollama chooses the `q4_K_M` quantization by default.
 
 4. In `llm_server_windows/.ollama`, copy `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b` to create an additional identical file: `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b_high`. This will allow us to create two separate configs for the same qwq:32b model- which will appear as two separate models in the model selection dropdown.
 
@@ -115,6 +117,7 @@ I used `OllamaSetup.exe` version 0.6.5.
 8. In the same `Admin Settings` page, navigate to `Models`. A list of models will appear- fetched from the Ollama server via the load balancer. The models in the list:
     ```txt
     codestral:22b
+    gemma3:27b-it-q4_K_M
     qwq:32b
     qwq:32b_high
     ```
@@ -170,6 +173,8 @@ I used `OllamaSetup.exe` version 0.6.5.
     ```
     And scroll down to click `Save & Update`. For `qwq:32b_high` system prompt should stay blank- which lets the model decide how long to think.
 
+17. 
+
 17. Customize model descriptions to:
     | Model         | Description                       |
     | :------------ | :-------------------------------- |
@@ -185,9 +190,7 @@ Multiple users will be able to use the UI at the same time!
 
 ## Plans
 
-I want to add support for the models-
+I want to add support for the model-
 
 - **GLM-4-32B-0414** https://github.com/THUDM/GLM-4 released April 2025. Specifically- the non-thinking version seems to be a very good coding model for creating code for graphical user interfaces.\
   Will have to update to `Ollama version 0.6.5 (April 2025)` https://www.reddit.com/r/LocalLLaMA/comments/1k4w9p2/i_uploaded_glm432b0414_glmz132b0414_q4_k_m_to/
-
-- **Gemma-3-27B-it** https://huggingface.co/google/gemma-3-27b-it non-thinking, multimodal. Able to generate code for quite a good and stable p5.js tree. I'm very impressed by this model from Google.
