@@ -112,7 +112,7 @@ I used `OllamaSetup.exe` version 0.6.5.
 
 6. In the same `Admin Settings` page, navigate to `Evaluations` and turn off `Arena Models`, **then click Save** at the bottom right.
 
-7. In the same `Admin Settings` page, navigate to `Documents` and turn on `Bypass Embedding and Retrieval`. This will inject the entire content of uploaded files as context instead of the default of doing a weird tokenization that doesn't work. Also so `Max Upload Size 0.025 MB` which might prevent users from overloading context length with ridiculous file sizes.
+7. In the same `Admin Settings` page, navigate to `Documents` and turn on `Bypass Embedding and Retrieval`. This will inject the entire content of uploaded files as context instead of the default of doing a weird tokenization that doesn't work. Also so `Max Upload Size 1 MB` which might prevent users from overloading context length with ridiculous file sizes.
 
 8. In the same `Admin Settings` page, navigate to `Models`. A list of models will appear- fetched from the Ollama server via the load balancer. The models in the list:
     ```txt
