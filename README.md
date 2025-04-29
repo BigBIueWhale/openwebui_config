@@ -204,7 +204,14 @@ Multiple users will be able to use the UI at the same time!
 
 ## Plans
 
-I want to add support for the model-
+Switch from `qwq:32b` to the model that came out today (April 30 2025)-
+```cmd
+C:\Users\user\Desktop>ollama run qwen3:32b
+>>> /set parameter num_ctx 12000
+Set parameter 'num_ctx' to '12000'
+>>> /set parameter num_predict -1
+Set parameter 'num_predict' to '-1'
+>>> Create a realistic looking tree in p5.js
+```
 
-- **GLM-4-32B-0414** https://github.com/THUDM/GLM-4 released April 2025. Specifically- the non-thinking version seems to be a very good coding model for creating code for graphical user interfaces.\
-  Will have to update to `Ollama version 0.6.5 (April 2025)` https://www.reddit.com/r/LocalLLaMA/comments/1k4w9p2/i_uploaded_glm432b0414_glmz132b0414_q4_k_m_to/
+[Result realistic looking p5js tree](./doc/qwen3_32b_realistic_p5js_tree.png)
