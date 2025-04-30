@@ -85,7 +85,7 @@ I used `OllamaSetup.exe` version 0.6.5.
 4. Create an instance of the docker image-
 
     ```cmd
-    docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -e OLLAMA_BASE_URL=http://127.0.0.1:11434 -e OFFLINE_MODE=True -v "open-webui:/openwebui_data/" --name open_webui --restart always ghcr.io/open-webui/open-webui:main
+    docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -e "OLLAMA_BASE_URL=http://host.docker.internal:11434" -e OFFLINE_MODE=True -v "open-webui:/openwebui_data/" --name open_webui --restart always ghcr.io/open-webui/open-webui:main
     ```
 
     OLLAMA_BASE_URL should point to the PC with the load balancer running (could be this PC, in which case it's 127.0.0.1).
