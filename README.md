@@ -57,9 +57,13 @@ I used `OllamaSetup.exe` version 0.6.7.
 
 3. When preparing `llm_server_windows` project, Copy the now- full `.ollama` folder into the root directory of the project `llm_server_windows/.ollama`.
 
-4. In `llm_server_windows/.ollama`, copy `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b` to create an additional identical file: `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b-high`. This will allow us to create two separate configs for the same qwq:32b model- which will appear as two separate models in the model selection dropdown.
+4. In `llm_server_windows/.ollama`, copy `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b` to create an additional identical file: `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b-high`. This will allow us to create two separate configs for the same `qwq:32b` model- which will appear as two separate models in the model selection dropdown.
 
-5. Choose a PC on the local network on which to install Docker. This PC will be the OpenWebUI server and the load balancer.
+5. Again, in `llm_server_windows/.ollama`, copy `.ollama/models/manifests/registry.ollama.ai/library/qwen3/32b` to create an additional identical file: `.ollama/models/manifests/registry.ollama.ai/library/qwen3/32b-think`. This will allow us to create two separate configs for the same `qwen3:32b` model- which will appear as two separate models in the model selection dropdown.
+
+6. Again, in `llm_server_windows/.ollama`, copy `.ollama/models/manifests/registry.ollama.ai/library/qwen3/30b-a3b` to create an additional identical file: `.ollama/models/manifests/registry.ollama.ai/library/qwen3/30b-a3b-think`. This will allow us to create two separate configs for the same `qwen3:30b-a3b` model- which will appear as two separate models in the model selection dropdown.
+
+7. Choose a PC on the local network on which to install Docker. This PC will be the OpenWebUI server and the load balancer.
 
 ## Setup WebUI
 
@@ -81,7 +85,7 @@ I used `OllamaSetup.exe` version 0.6.7.
 
 1. Run an [ollama_load_balancer](https://github.com/BigBIueWhale/ollama_load_balancer/) docker instance on the local network. Use the [dockerfile configuration](https://github.com/BigBIueWhale/ollama_load_balancer/blob/master/README.md#docker) provided. Specify in the CLI arguments the IP addresses of each of the AI computers, and give them names. Make sure to pass flag `--timeout 60` to allow for prompt ingestion delays.
 
-2. Alternatively, run the load balancer [without docker](https://github.com/BigBIueWhale/ollama_load_balancer/blob/master/README.md#release-notes).
+2. Alternatively, run the load balancer without docker using the [precompiled release executables](https://github.com/BigBIueWhale/ollama_load_balancer/blob/master/README.md#release-notes).
 
 ## Setup OpenWebUI
 
@@ -128,8 +132,10 @@ I used `OllamaSetup.exe` version 0.6.7.
     codestral:22b
     gemma3:27b
     gemma3:3b
-    qwen3:32b
     qwen3:30b-a3b
+    qwen3:30b-a3b-think
+    qwen3:32b
+    qwen3:32b-think
     qwq:32b
     qwq:32b-high
     ```
