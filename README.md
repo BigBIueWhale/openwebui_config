@@ -152,26 +152,101 @@ I used `OllamaSetup.exe` version 0.6.7.
       | `Top P`          | 0.95                                                     |
       | `Repeat Penalty` | 1.04                                                     |
       | `Description`    | `30k context- Mistral AI coding model released May 2024` |
-      | `Visibility`     | `Public`                                                 |
-      | `Vision`         | `Off`                                                    |
-      | `Citations`      | `Off`                                                    |
+      | `Visibility`     |  Public                                                  |
+      | `Vision`         |  Off                                                     |
+      | `Citations`      |  Off                                                     |
 
       These values are taken from https://medium.com/@givkashi/exploring-codestral-a-code-generation-model-from-mistral-ai-c94e18a551c3 and are actually very important so the model produces working code. I decided to change `Pepeat Penalty` to 1.04 so the model becomes less lazy.
 
-9. Click on `codestral:22b` and change `Visiblity` dropdown from `Private` to `Public`. Turn off `Vision` and `Citations` capabilities. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
+3. Set the following settings for `gemma3:27b`:
 
-10.  Permanently customize `codestral:22b` model parameters to have the following values:
+      | Parameter        | Value                                                                            |
+      | :--------------- | :------------------------------------------------------------------------------- |
+      | `Context Length` | 14000                                                                            |
+      | `num_predict`    | 8192                                                                             |
+      | `Description`    | `14k context- Google multilingual multimodal (vision) model released March 2025` |
+      | `Visibility`     | Public                                                                           |
+      | `Vision`         | On                                                                               |
+      | `Citations`      | Off                                                                              |
 
-        | Parameter        | Value                                                  |
-        | :--------------- | :----------------------------------------------------- |
-        | `Context Length` | 30000                                                  |
-        | `num_predict`    | 29000                                                  |
-        | `Temperature`    | 0.1                                                    |
-        | `Top P`          | 0.95                                                   |
-        | `Repeat Penalty` | 1.04                                                   |
+      num_predict is set to 8192 because Gemma natively has a [Total output context of 8192 tokens](https://huggingface.co/google/gemma-3-27b-it/blob/main/README.md#inputs-and-outputs). `Context Length` value is set to fit in a 24 GB VRAM GPU. The other required parameters are set by [Ollama's config file](https://ollama.com/library/gemma3:27b-it-q4_K_M/blobs/3116c5225075) so we don't need to explicitly set them.
 
+4. Set the following settings for `gemma3:3b`:
 
-11. Scroll to the bottom of the `codestral:22b` Model Params page and click `Save & Update` at the bottom.
+      | Parameter        | Value                                                                             |
+      | :--------------- | :-------------------------------------------------------------------------------- |
+      | `Context Length` | 131072                                                                            |
+      | `num_predict`    | 8192                                                                              |
+      | `Description`    | `128k context- Google multilingual multimodal (vision) model released March 2025` |
+      | `Visibility`     | Public                                                                            |
+      | `Vision`         | On                                                                                |
+      | `Citations`      | Off                                                                               |
+
+      num_predict is set to 8192 because Gemma natively has a [Total output context of 8192 tokens](https://huggingface.co/google/gemma-3-4b-it/blob/main/README.md#inputs-and-outputs). `Context Length` value is set to fit in a 24 GB VRAM GPU. The other required parameters are set by [Ollama's config file](https://ollama.com/library/gemma3:4b/blobs/3116c5225075) so we don't need to explicitly set them.
+
+5. Set the following settings for `qwen3:30b-a3b`:
+
+      | Parameter        | Value                                               |
+      | :--------------- | :-------------------------------------------------- |
+      | `Context Length` | 8192                                                |
+      | `num_predict`    | -1                                                  |
+      | `Temperature`    | 0.7                                                 |
+      | `Top K`          | 20                                                  |
+      | `Top P`          | 0.8                                                 |
+      | `Min P`          | 0                                                   |
+      | `Repeat Penalty` | 1                                                   |
+      | `Description`    | `8k context- Alibaba MoE model released April 2025` |
+      | `Visibility`     |  Public                                             |
+      | `Vision`         |  Off                                                |
+      | `Citations`      |  Off                                                |
+
+6. Set the following settings for `qwen3:30b-a3b-think`:
+
+      | Parameter        | Value                                                         |
+      | :--------------- | :------------------------------------------------------------ |
+      | `Context Length` | 14000                                                         |
+      | `num_predict`    | -1                                                            |
+      | `Temperature`    | 0.6                                                           |
+      | `Top K`          | 20                                                            |
+      | `Top P`          | 0.95                                                          |
+      | `Min P`          | 0                                                             |
+      | `Repeat Penalty` | 1                                                             |
+      | `Description`    | `14k context- Alibaba MoE thinking model released April 2025` |
+      | `Visibility`     |  Public                                                       |
+      | `Vision`         |  Off                                                          |
+      | `Citations`      |  Off                                                          |
+
+7. Set the following settings for `qwen3:32b`:
+
+      | Parameter        | Value                                               |
+      | :--------------- | :-------------------------------------------------- |
+      | `Context Length` | 8192                                                |
+      | `num_predict`    | -1                                                  |
+      | `Temperature`    | 0.7                                                 |
+      | `Top K`          | 20                                                  |
+      | `Top P`          | 0.8                                                 |
+      | `Min P`          | 0                                                   |
+      | `Repeat Penalty` | 1                                                   |
+      | `Description`    | `8k context- Alibaba MoE model released April 2025` |
+      | `Visibility`     |  Public                                             |
+      | `Vision`         |  Off                                                |
+      | `Citations`      |  Off                                                |
+
+8. Set the following settings for `qwen3:32b-think`:
+
+      | Parameter        | Value                                                           |
+      | :--------------- | :-------------------------------------------------------------- |
+      | `Context Length` | 14000                                                           |
+      | `num_predict`    | -1                                                              |
+      | `Temperature`    | 0.6                                                             |
+      | `Top K`          | 20                                                              |
+      | `Top P`          | 0.95                                                            |
+      | `Min P`          | 0                                                               |
+      | `Repeat Penalty` | 1                                                               |
+      | `Description`    | `14k context- Alibaba dense thinking model released April 2025` |
+      | `Visibility`     |  Public                                                         |
+      | `Vision`         |  Off                                                            |
+      | `Citations`      |  Off                                                            |
 
 12. Scroll to the top of the page and click on `Back`. Now click `qwq:32b` and change `Visiblity` dropdown from `Private` to `Public`. Turn off `Vision` and `Citations` capabilities. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
 
@@ -207,21 +282,6 @@ I used `OllamaSetup.exe` version 0.6.7.
     Low Reasoning Effort: You have extremely limited time to think and respond to the user’s query. Every additional second of processing and reasoning incurs a significant resource cost, which could affect efficiency and effectiveness. Your task is to prioritize speed without sacrificing essential clarity or accuracy. Provide the most direct and concise answer possible. Avoid unnecessary steps, reflections, verification, or refinements UNLESS ABSOLUTELY NECESSARY. Your primary goal is to deliver a quick, clear and correct response.
     ```
     And scroll down to click `Save & Update`. For `qwq:32b-high` system prompt should stay blank- which lets the model decide how long to think.
-
-17. Click on `gemma3:27b-it-q4_K_M` and change `Visiblity` dropdown from `Private` to `Public`. Under "capabilities", keep on `Vision` and turn off `Citations`. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
-
-18.  Permanently customize `gemma3:27b-it-q4_K_M` model parameters to have the following values:
-
-        | Parameter        | Value |
-        | :--------------- | :---- |
-        | `Context Length` | 14000 |
-        | `num_predict`    | 8192  |
-
-        num_predict is set to 8192 because Gemma natively has a [Total output context of 8192 tokens](https://huggingface.co/google/gemma-3-4b-it/blob/main/README.md#inputs-and-outputs). `Context Length` value is set to fit in a 24 GB VRAM GPU. The other required parameters are set by [Ollama's config file](https://ollama.com/library/gemma3:27b-it-q4_K_M/blobs/3116c5225075) so we don't need to explicitly set them.
-
-19. Change model name from `gemma3:27b-it-q4_K_M` to `gemma3:27b` for naming consistency.
-
-20. Scroll to the bottom of the `gemma3:27b` Model Params page and click `Save & Update` at the bottom.
 
 21. Customize model descriptions to:
     | Model         | Description                                                                    |
