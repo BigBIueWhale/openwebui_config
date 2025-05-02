@@ -274,6 +274,9 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
 
       The additional context is to accomodate the thinking. Also, qwen3 models have different recommended parameters in thinking / non thinking mode.
 
+      **This is the smartest model that can run on 24 GB VRAM.**\
+      We use 14k context instead of the maximum supported: `Context Length: 40960` due to low VRAM.
+
 10. Set the following settings for `qwq:32b`:
 
       | Parameter        | Value                                                                    |
