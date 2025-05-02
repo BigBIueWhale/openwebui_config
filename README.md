@@ -127,7 +127,9 @@ I used `OllamaSetup.exe` version 0.6.7.
 
 7. In the same `Admin Settings` page, navigate to `Documents` and turn on `Bypass Embedding and Retrieval`. This will inject the entire content of uploaded files as context instead of the default of doing a weird tokenization that doesn't work. Also set `Max Upload Size 1 MB` which might prevent users from overloading context length with ridiculous file sizes.
 
-8. In the same `Admin Settings` page, navigate to `Models`. A list of models will appear- fetched from the Ollama server via the load balancer. The models in the list:
+## Model Settings
+
+1. In OpenWebUI `Admin Settings` page, navigate to `Models`. A list of models will appear- fetched from the Ollama server via the load balancer. The models in the list:
     ```txt
     codestral:22b
     gemma3:27b
@@ -140,19 +142,34 @@ I used `OllamaSetup.exe` version 0.6.7.
     qwq:32b-high
     ```
 
+2. Set the following settings for `codestral:22b`:
+
+      | Parameter        | Value                                                    |
+      | :--------------- | :------------------------------------------------------- |
+      | `Context Length` | 30000                                                    |
+      | `num_predict`    | -1                                                       |
+      | `Temperature`    | 0.1                                                      |
+      | `Top P`          | 0.95                                                     |
+      | `Repeat Penalty` | 1.04                                                     |
+      | `Description`    | `30k context- Mistral AI coding model released May 2024` |
+      | `Visibility`     | `Public`                                                 |
+      | `Vision`         | `Off`                                                    |
+      | `Citations`      | `Off`                                                    |
+
+      These values are taken from https://medium.com/@givkashi/exploring-codestral-a-code-generation-model-from-mistral-ai-c94e18a551c3 and are actually very important so the model produces working code. I decided to change `Pepeat Penalty` to 1.04 so the model becomes less lazy.
+
 9. Click on `codestral:22b` and change `Visiblity` dropdown from `Private` to `Public`. Turn off `Vision` and `Citations` capabilities. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
 
 10.  Permanently customize `codestral:22b` model parameters to have the following values:
 
-        | Parameter        | Value  |
-        | :--------------- | :----- |
-        | `Context Length` | 30000  |
-        | `num_predict`    | 29000  |
-        | `Temperature`    | 0.1    |
-        | `Top P`          | 0.95   |
-        | `Repeat Penalty` | 1.04   |
+        | Parameter        | Value                                                  |
+        | :--------------- | :----------------------------------------------------- |
+        | `Context Length` | 30000                                                  |
+        | `num_predict`    | 29000                                                  |
+        | `Temperature`    | 0.1                                                    |
+        | `Top P`          | 0.95                                                   |
+        | `Repeat Penalty` | 1.04                                                   |
 
-        These values are taken from https://medium.com/@givkashi/exploring-codestral-a-code-generation-model-from-mistral-ai-c94e18a551c3 and are actually very important so the model produces working code. I decided to change `Pepeat Penalty` to 1.04 so the model becomes less lazy.
 
 11. Scroll to the bottom of the `codestral:22b` Model Params page and click `Save & Update` at the bottom.
 
