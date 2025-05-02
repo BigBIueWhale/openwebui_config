@@ -125,7 +125,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
 
 2. Navigate to `Settings` -> `Admin Settings` -> `Interface` -> `Set Task Model` -> `Local Models` and change the dropdown value from `Current Model` to `gemma3:4b`, **then click Save** at the bottom right. This is the model Ollama is gonna use for generating a title for each conversation. Reasoning models are no good for this task.
 
-3. In the same `Admin Settings` page, navigate to `Code Execution` -> `Enable Code Interpreter` and turn it off. The models just don't understand it.
+3. In the same `Admin Settings` page, navigate to `Code Execution` -> `Enable Code Interpreter` and turn it off- it doesn't work very well IMO, **then click Save** at the bottom right.
 
 4. Stay in `Code Execution` and navigate to `Enable Code Execution`. Keep it on and make sure `Code Execution Engine` is set to `pyodide`, **then click Save** at the bottom right. This will allow users to press `run code` on any code block that the LLM responds with. Matplotlib visualizations are supported and shown inline.
 
@@ -133,7 +133,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
 
 6. In the same `Admin Settings` page, navigate to `Evaluations` and turn off `Arena Models`, **then click Save** at the bottom right.
 
-7. In the same `Admin Settings` page, navigate to `Documents` and turn on `Bypass Embedding and Retrieval`. This will inject the entire content of uploaded files as context instead of the default of doing a weird tokenization that doesn't work. Also set `Max Upload Size 1 MB` which might prevent users from overloading context length with ridiculous file sizes.
+7. In the same `Admin Settings` page, navigate to `Documents` and turn on `Bypass Embedding and Retrieval`. This will inject the entire content of uploaded files as context instead of the default of doing a weird tokenization that doesn't work. Also set `Max Upload Size 1 MB` which might prevent users from overloading context length with ridiculous file sizes, **then click Save** at the bottom right.
 
 ## Model Settings
 
