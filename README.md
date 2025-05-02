@@ -141,7 +141,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
     ```txt
     codestral:22b
     gemma3:27b
-    gemma3:3b
+    gemma3:4b
     qwen2.5-coder:32b
     qwen3:30b-a3b
     qwen3:30b-a3b-think
@@ -180,7 +180,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
 
       num_predict is set to 8192 because Gemma natively has a [Total output context of 8192 tokens](https://huggingface.co/google/gemma-3-27b-it/blob/main/README.md#inputs-and-outputs). `Context Length` value is set to fit in a 24 GB VRAM GPU. The other required parameters are set by [Ollama's config file](https://ollama.com/library/gemma3:27b-it-q4_K_M/blobs/3116c5225075) so we don't need to explicitly set them.
 
-4. Set the following settings for `gemma3:3b`:
+4. Set the following settings for `gemma3:4b`:
 
       | Parameter        | Value                                                                             |
       | :--------------- | :-------------------------------------------------------------------------------- |
