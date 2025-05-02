@@ -69,7 +69,7 @@ classDiagram
 
 9. Transfer your (now heavy) `llm_server_windows` folder to all of the AI computers (or just set up Ollama server if the computers are not running Windows 10/11). Run `double_click_install.bat` on each of those computers. This will turn the AI computers into reliable Ollama servers.
 
-## Setup WebUI
+## Download WebUI Docker Image
 
 1. Prepare an online Windows 10 computer (you can use a VMWare virtual machine).
 
