@@ -52,6 +52,7 @@ I used `OllamaSetup.exe` version 0.6.7.
     ollama pull qwq:32b
     ollama pull qwen3:32b
     ollama pull qwen3:30b-a3b
+    ollama pull qwen2.5-coder:32b
     ```
     Requires total storage of `104 GB (111,831,398,555 bytes)`.
 
@@ -134,6 +135,7 @@ I used `OllamaSetup.exe` version 0.6.7.
     codestral:22b
     gemma3:27b
     gemma3:3b
+    qwen2.5-coder:32b
     qwen3:30b-a3b
     qwen3:30b-a3b-think
     qwen3:32b
@@ -184,7 +186,18 @@ I used `OllamaSetup.exe` version 0.6.7.
 
       num_predict is set to 8192 because Gemma natively has a [Total output context of 8192 tokens](https://huggingface.co/google/gemma-3-4b-it/blob/main/README.md#inputs-and-outputs). `Context Length` value is set to fit in a 24 GB VRAM GPU. The other required parameters are set by [Ollama's config file](https://ollama.com/library/gemma3:4b/blobs/3116c5225075) so we don't need to explicitly set them.
 
-5. Set the following settings for `qwen3:30b-a3b`:
+5. Set the following settings for `qwen2.5-coder:32b`:
+
+      | Parameter        | Value                                                |
+      | :--------------- | :--------------------------------------------------- |
+      | `Context Length` | 8192                                                 |
+      | `num_predict`    | -1                                                   |
+      | `Description`    | `8k context- Alibaba coding model released Nov 2024` |
+      | `Visibility`     |  Public                                              |
+      | `Vision`         |  Off                                                 |
+      | `Citations`      |  Off                                                 |
+
+6. Set the following settings for `qwen3:30b-a3b`:
 
       | Parameter        | Value                                               |
       | :--------------- | :-------------------------------------------------- |
@@ -195,12 +208,13 @@ I used `OllamaSetup.exe` version 0.6.7.
       | `Top P`          | 0.8                                                 |
       | `Min P`          | 0                                                   |
       | `Repeat Penalty` | 1                                                   |
+      | `System Prompt`  | `/no_think`                                         |
       | `Description`    | `8k context- Alibaba MoE model released April 2025` |
       | `Visibility`     |  Public                                             |
       | `Vision`         |  Off                                                |
       | `Citations`      |  Off                                                |
 
-6. Set the following settings for `qwen3:30b-a3b-think`:
+7. Set the following settings for `qwen3:30b-a3b-think`:
 
       | Parameter        | Value                                                         |
       | :--------------- | :------------------------------------------------------------ |
@@ -216,7 +230,9 @@ I used `OllamaSetup.exe` version 0.6.7.
       | `Vision`         |  Off                                                          |
       | `Citations`      |  Off                                                          |
 
-7. Set the following settings for `qwen3:32b`:
+      The additional context is to accomodate the thinking.
+
+8. Set the following settings for `qwen3:32b`:
 
       | Parameter        | Value                                               |
       | :--------------- | :-------------------------------------------------- |
@@ -227,12 +243,13 @@ I used `OllamaSetup.exe` version 0.6.7.
       | `Top P`          | 0.8                                                 |
       | `Min P`          | 0                                                   |
       | `Repeat Penalty` | 1                                                   |
+      | `System Prompt`  | `/no_think`                                         |
       | `Description`    | `8k context- Alibaba MoE model released April 2025` |
       | `Visibility`     |  Public                                             |
       | `Vision`         |  Off                                                |
       | `Citations`      |  Off                                                |
 
-8. Set the following settings for `qwen3:32b-think`:
+9. Set the following settings for `qwen3:32b-think`:
 
       | Parameter        | Value                                                           |
       | :--------------- | :-------------------------------------------------------------- |
@@ -248,48 +265,44 @@ I used `OllamaSetup.exe` version 0.6.7.
       | `Vision`         |  Off                                                            |
       | `Citations`      |  Off                                                            |
 
-12. Scroll to the top of the page and click on `Back`. Now click `qwq:32b` and change `Visiblity` dropdown from `Private` to `Public`. Turn off `Vision` and `Citations` capabilities. Click on `Show` to the right of `Advanced Params` to expand control over advanced paramters.
+      The additional context is to accomodate the thinking. Also, qwen3 models have different recommended parameters in thinking / non thinking mode.
 
-13. Permanently customize `qwq:32b` model parameters to have the following values:
+10. Set the following settings for `qwq:32b`:
 
-    | Parameter        | Value |
-    | :--------------- | :---- |
-    | `Context Length` | 8192  |
-    | `num_predict`    | -1    |
-    | `Top K`          | 40    |
-    | `Top P`          | 0.95  |
-    | `Min P`          | 0     |
-    | `Repeat Penalty` | 1     |
-    | `Temperature`    | 0.6   |
+      | Parameter        | Value                                                                    |
+      | :--------------- | :----------------------------------------------------------------------- |
+      | `Context Length` | 8192                                                                     |
+      | `num_predict`    | -1                                                                       |
+      | `Temperature`    | 0.6                                                                      |
+      | `Top K`          | 40                                                                       |
+      | `Top P`          | 0.95                                                                     |
+      | `Min P`          | 0                                                                        |
+      | `Repeat Penalty` | 1                                                                        |
+      | `System Prompt`  | `Low Reasoning Effort: You have extremely limited time to think and respond to the user’s query. Every additional second of processing and reasoning incurs a significant resource cost, which could affect efficiency and effectiveness. Your task is to prioritize speed without sacrificing essential clarity or accuracy. Provide the most direct and concise answer possible. Avoid unnecessary steps, reflections, verification, or refinements UNLESS ABSOLUTELY NECESSARY. Your primary goal is to deliver a quick, clear and correct response.` |
+      | `Description`    | `8k context (less thinking)- Alibaba thinking model released March 2025` |
+      | `Visibility`     |  Public                                                                  |
+      | `Vision`         |  Off                                                                     |
+      | `Citations`      |  Off                                                                     |
 
-    We don't want to set the `Context Length` too high because then Ollama might decide to start using the CPU instead of the GPU. At `Context Length` 8192 tokens, Ollama already might start offloading some layers to the CPU due to low VRAM.
+      System prompt taken from https://www.reddit.com/r/LocalLLaMA/comments/1j4v3fi/comment/mgd2t3r and is used since `qwq:32b` doesn't natively support turning off / reducing thinking so this has to be done via prompt engineering.
 
-    The issue is, qwq might use 8000+ tokens during its thinking stage.
+11. Set the following settings for `qwq:32b-high`:
 
-14. Scroll to the bottom of the `qwq:32b` Model Params page and click `Save & Update` at the bottom.
+      | Parameter        | Value                                                              |
+      | :--------------- | :----------------------------------------------------------------- |
+      | `Context Length` | 14000                                                              |
+      | `num_predict`    | -1                                                                 |
+      | `Temperature`    | 0.6                                                                |
+      | `Top K`          | 40                                                                 |
+      | `Top P`          | 0.95                                                               |
+      | `Min P`          | 0                                                                  |
+      | `Repeat Penalty` | 1                                                                  |
+      | `Description`    | `14k context (slower)- Alibaba thinking model released March 2025` |
+      | `Visibility`     |  Public                                                            |
+      | `Vision`         |  Off                                                               |
+      | `Citations`      |  Off                                                               |
 
-15. Permanently customize `qwq:32b-high` in the exact same way as `qwq:32b`, except choose the following parameters differently:
-
-    | Parameter        | Value |
-    | :--------------- | :---- |
-    | `Context Length` | 14000 |
-
-    The additional context is to accomodate the longer thinking time.
-
-16. `qwq:32b` overthinks by default. Users don't like waiting 10 minutes for an answer, so customize `qwq:32b` to keep its answers brief. From the `Admin page` -> `Models` choose to edit specifically `qwq:32b` and copy-paste this system prompt:
-    https://www.reddit.com/r/LocalLLaMA/comments/1j4v3fi/comment/mgd2t3r
-    ```txt
-    Low Reasoning Effort: You have extremely limited time to think and respond to the user’s query. Every additional second of processing and reasoning incurs a significant resource cost, which could affect efficiency and effectiveness. Your task is to prioritize speed without sacrificing essential clarity or accuracy. Provide the most direct and concise answer possible. Avoid unnecessary steps, reflections, verification, or refinements UNLESS ABSOLUTELY NECESSARY. Your primary goal is to deliver a quick, clear and correct response.
-    ```
-    And scroll down to click `Save & Update`. For `qwq:32b-high` system prompt should stay blank- which lets the model decide how long to think.
-
-21. Customize model descriptions to:
-    | Model         | Description                                                                    |
-    | :------------ | :----------------------------------------------------------------------------- |
-    | codestral:22b | 30k context- Mistral AI coding model released May 2024                         |
-    | gemma3:27b    | 14k context- Google multilingual multimodal (vision) model released March 2025 |
-    | qwq:32b       | 8k context (less thinking)- Alibaba thinking model released March 2025         |
-    | qwq:32b-high  | 14k context (slower)- Alibaba thinking model released March 2025               |
+      The additional context is to accomodate the thinking. Also, qwen3 models have different recommended parameters in thinking / non thinking mode.
 
 ## Access
 
