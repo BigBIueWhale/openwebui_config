@@ -45,15 +45,15 @@ classDiagram
 I used `OllamaSetup.exe` version 0.6.7.
 
 2. Install `OllamaSetup.exe` on an online computer. Ollama chooses the 4-bit quantization by default. Run these commands to populate the `.ollama` folder in your user's home directory (`C:/Users/user/.ollama`) with model weights:
-```cmd
-ollama pull codestral:22b
-ollama pull gemma3:27b
-ollama pull gemma3:4b
-ollama pull qwq:32b
-ollama pull qwen3:32b
-ollama pull qwen3:30b-a3b
-```
-Requires total storage of `104 GB (111,831,398,555 bytes)`.
+    ```cmd
+    ollama pull codestral:22b
+    ollama pull gemma3:27b
+    ollama pull gemma3:4b
+    ollama pull qwq:32b
+    ollama pull qwen3:32b
+    ollama pull qwen3:30b-a3b
+    ```
+    Requires total storage of `104 GB (111,831,398,555 bytes)`.
 
 3. When preparing `llm_server_windows` project, Copy the now- full `.ollama` folder into the root directory of the project `llm_server_windows/.ollama`.
 
