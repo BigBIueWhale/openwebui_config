@@ -53,6 +53,7 @@ ollama pull qwq:32b
 ollama pull qwen3:32b
 ollama pull qwen3:30b-a3b
 ```
+Requires total storage of `104 GB (111,831,398,555 bytes)`.
 
 3. When preparing `llm_server_windows` project, Copy the now- full `.ollama` folder into the root directory of the project `llm_server_windows/.ollama`.
 
