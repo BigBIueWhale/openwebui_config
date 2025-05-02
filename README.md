@@ -5,13 +5,7 @@ Let's say you're on an offline network, and you have multiple PCs on the network
 You can't use [ChatGPT](chat.openai.com) how sad😭\
 Now you can set up your own AI chatbot for coding on your internal network!
 
-We're gonna use: `codestral:22b`,  `qwq:32b` and `gemma3:27b-it-q4_K_M`, all models running on Ollama. We're gonna setup OpenWebUI, and `load_balancer` created by BigBIueWhale, and `llm_server_windows` script suite created by BigBIueWhale.
-
-**Codestral:22b (2024 model)** is good at producing code that actually works, when set up with the correct parameters.
-
-**Alibaba qwq:32b** is the best open-source thinking model that can run on a 24 GB VRAM GPU. It's essentially the deepseek-R1 alternative for single-GPU setups.
-
-**gemma3 27b instruction-tuned** Google multilingual multimodal (vision) model released March 2025. The vision understanding makes it great at coding UIs.
+We're gonna setup various models, all running on Ollama. We're gonna setup OpenWebUI, and `load_balancer` created by BigBIueWhale, and `llm_server_windows` script suite created by BigBIueWhale.
 
 ```mermaid
 classDiagram
@@ -45,20 +39,28 @@ classDiagram
     LoadBalancer --> SlavePC3 : routes inference
 ```
 
-## Prepare
+## Download Models
 
 1. Install https://github.com/BigBIueWhale/llm_server_windows/ on all of the AI computers (or just set up Ollama server if the computers are not running Windows 10/11). This will turn each of the AI computers into a powerful server.\
-I used `OllamaSetup.exe` version 0.6.5.
+I used `OllamaSetup.exe` version 0.6.7.
 
-3. When preparing `llm_server_windows` project, use online computer to create an `.ollama` folder with `ollama pull qwq:32b` and `ollama pull codestral:22b` and `ollama pull gemma3:27b-it-q4_K_M`. Ollama chooses the `q4_K_M` quantization by default.
+2. Install `OllamaSetup.exe` on an online computer. Ollama chooses the 4-bit quantization by default. Run these commands to populate the `.ollama` folder in your user's home directory (`C:/Users/user/.ollama`) with model weights:
+```cmd
+ollama pull codestral:22b
+ollama pull gemma3:27b
+ollama pull gemma3:4b
+ollama pull qwq:32b
+ollama pull qwen3:32b
+ollama pull qwen3:30b-a3b
+```
+
+3. When preparing `llm_server_windows` project, Copy the now- full `.ollama` folder into the root directory of the project `llm_server_windows/.ollama`.
 
 4. In `llm_server_windows/.ollama`, copy `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b` to create an additional identical file: `.ollama/models/manifests/registry.ollama.ai/library/qwq/32b-high`. This will allow us to create two separate configs for the same qwq:32b model- which will appear as two separate models in the model selection dropdown.
 
 5. Choose a PC on the local network on which to install Docker. This PC will be the OpenWebUI server and the load balancer.
 
-6. Run an [ollama_load_balancer](https://github.com/BigBIueWhale/ollama_load_balancer/) docker instance on the local network. Use the [dockerfile configuration](https://github.com/BigBIueWhale/ollama_load_balancer/blob/master/README.md#docker) provided. Specify in the CLI arguments the IP addresses of each of the AI computers, and give them names. Make sure to pass flag `--timeout 60` to allow for prompt ingestion delays. Set this Rust executable to run on boot.
-
-## Downloads
+## Setup WebUI
 
 1. Prepare an online Windows 10 computer (you can use a VMWare virtual machine).
 
@@ -68,11 +70,17 @@ I used `OllamaSetup.exe` version 0.6.5.
 
 4. Open CMD and run command `docker pull ghcr.io/open-webui/open-webui:main`. I used OpenWebUI version 0.6.5 (April 2025). Command is taken from: https://docs.openwebui.com/getting-started/quick-start/
 
-6. Open a CMD window and navigate to a known folder, then run `docker save -o openwebui.docker ghcr.io/open-webui/open-webui:main` as mentioned [in forums online](https://serverfault.com/a/718470/1257167). This might take a few minutes.
+5. Open a CMD window and navigate to a known folder, then run `docker save -o openwebui.docker ghcr.io/open-webui/open-webui:main` as mentioned [in forums online](https://serverfault.com/a/718470/1257167). This might take a few minutes.
 
-7. Take the newly created `openwebui.docker` (4.5+ gigabytes)- with you to the offline computer.
+6. Take the newly created `openwebui.docker` (4.5+ gigabytes)- with you to the offline computer.
 
-8. Take that same docker installer `Docker Desktop Installer.exe` with you to the offline computer.
+7. Take that same docker installer `Docker Desktop Installer.exe` with you to the offline computer.
+
+## Setup Load Balancer
+
+1. Run an [ollama_load_balancer](https://github.com/BigBIueWhale/ollama_load_balancer/) docker instance on the local network. Use the [dockerfile configuration](https://github.com/BigBIueWhale/ollama_load_balancer/blob/master/README.md#docker) provided. Specify in the CLI arguments the IP addresses of each of the AI computers, and give them names. Make sure to pass flag `--timeout 60` to allow for prompt ingestion delays.
+
+2. Alternatively, run the load balancer [without docker](https://github.com/BigBIueWhale/ollama_load_balancer/blob/master/README.md#release-notes).
 
 ## Setup OpenWebUI
 
@@ -96,28 +104,31 @@ I used `OllamaSetup.exe` version 0.6.5.
 
 6. In Docker Desktop dashboard, go to `Settings Icon` -> `General` and choose to enable `Start Docker Desktokp when you sign in to your computer`. This ensures the OpenWebUI server runs automatically.
 
-7. Launch Google Chrome at http://127.0.0.1:3000 to see the initial admin creation screen. Create your admin user.
+7. Launch Google Chrome at http://127.0.0.1:3000 to see the initial admin creation screen. Create your admin user with `Username: admin`
 
-## Configure OpenWebUI
+## OpenWebUI Settings
 
 1. Open Google Chrome at http://127.0.0.1:3000 with your admin login credentials.
 
-2. Navigate to `Settings` -> `Admin Settings` -> `Interface` -> `Set Task Model` -> `Local Models` and change the dropdown value from `Current Model` to `codestral:22b`, **then click Save** at the bottom right. This is the model Ollama is gonna use for generating a title for each conversation. Reasoning models are no good for this task so it would cause https://github.com/BigBIueWhale/ollama_load_balancer/ to report errors.
+2. Navigate to `Settings` -> `Admin Settings` -> `Interface` -> `Set Task Model` -> `Local Models` and change the dropdown value from `Current Model` to `gemma3:4b`, **then click Save** at the bottom right. This is the model Ollama is gonna use for generating a title for each conversation. Reasoning models are no good for this task.
 
 3. In the same `Admin Settings` page, navigate to `Code Execution` -> `Enable Code Interpreter` and turn it off. The models just don't understand it.
 
 4. Stay in `Code Execution` and navigate to `Enable Code Execution`. Keep it on and make sure `Code Execution Engine` is set to `pyodide`, **then click Save** at the bottom right. This will allow users to press `run code` on any code block that the LLM responds with. Matplotlib visualizations are supported and shown inline.
 
-5. In the same `Admin Settings` page, navigate to `General` -> `Authentication`. Change the dropdown of `Default User Role` from `pending` to `user`. Turn on toggle switch `Enable New Sign Ups`, **then click Save** at the bottom right.
+5. In the same `Admin Settings` page, navigate to `General` -> `Authentication`. Change the dropdown of `Default User Role` from `pending` to `user`. Turn on toggle switch `Enable New Sign Ups`, **then click Save** at the bottom right. Alternatively connect the webui to your existing LDAP authentication server.
 
 6. In the same `Admin Settings` page, navigate to `Evaluations` and turn off `Arena Models`, **then click Save** at the bottom right.
 
-7. In the same `Admin Settings` page, navigate to `Documents` and turn on `Bypass Embedding and Retrieval`. This will inject the entire content of uploaded files as context instead of the default of doing a weird tokenization that doesn't work. Also so `Max Upload Size 1 MB` which might prevent users from overloading context length with ridiculous file sizes.
+7. In the same `Admin Settings` page, navigate to `Documents` and turn on `Bypass Embedding and Retrieval`. This will inject the entire content of uploaded files as context instead of the default of doing a weird tokenization that doesn't work. Also set `Max Upload Size 1 MB` which might prevent users from overloading context length with ridiculous file sizes.
 
 8. In the same `Admin Settings` page, navigate to `Models`. A list of models will appear- fetched from the Ollama server via the load balancer. The models in the list:
     ```txt
     codestral:22b
-    gemma3:27b-it-q4_K_M
+    gemma3:27b
+    gemma3:3b
+    qwen3:32b
+    qwen3:30b-a3b
     qwq:32b
     qwq:32b-high
     ```
@@ -201,17 +212,3 @@ I used `OllamaSetup.exe` version 0.6.5.
 On the local network, use the IP address of the PC where docker is installed and tell users to connect to `http://192.168.0.14:3000` (for example).
 
 Multiple users will be able to use the UI at the same time!
-
-## Plans
-
-Switch from `qwq:32b` to the model that came out today (April 30 2025)-
-```cmd
-C:\Users\user\Desktop>ollama run qwen3:32b
->>> /set parameter num_ctx 12000
-Set parameter 'num_ctx' to '12000'
->>> /set parameter num_predict -1
-Set parameter 'num_predict' to '-1'
->>> Create a realistic looking tree in p5.js
-```
-
-[Result realistic looking p5js tree](./doc/qwen3_32b_realistic_p5js_tree.png)
