@@ -206,20 +206,20 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
 
 6. Set the following settings for `qwen3:30b-a3b`:
 
-      | Parameter        | Value                                               |
-      | :--------------- | :-------------------------------------------------- |
-      | `Context Length` | 8192                                                |
-      | `num_predict`    | -1                                                  |
-      | `Temperature`    | 0.7                                                 |
-      | `Top K`          | 20                                                  |
-      | `Top P`          | 0.8                                                 |
-      | `Min P`          | 0                                                   |
-      | `Repeat Penalty` | 1                                                   |
-      | `System Prompt`  | `/no_think`                                         |
-      | `Description`    | `8k context- Alibaba MoE model released April 2025` |
-      | `Visibility`     |  Public                                             |
-      | `Vision`         |  Off                                                |
-      | `Citations`      |  Off                                                |
+      | Parameter        | Value                                                |
+      | :--------------- | :--------------------------------------------------- |
+      | `Context Length` | 14000                                                |
+      | `num_predict`    | -1                                                   |
+      | `Temperature`    | 0.7                                                  |
+      | `Top K`          | 20                                                   |
+      | `Top P`          | 0.8                                                  |
+      | `Min P`          | 0                                                    |
+      | `Repeat Penalty` | 1                                                    |
+      | `System Prompt`  | `/no_think`                                          |
+      | `Description`    | `14k context- Alibaba MoE model released April 2025` |
+      | `Visibility`     |  Public                                              |
+      | `Vision`         |  Off                                                 |
+      | `Citations`      |  Off                                                 |
 
 7. Set the following settings for `qwen3:30b-a3b-think`:
 
