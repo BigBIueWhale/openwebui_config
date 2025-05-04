@@ -73,7 +73,7 @@ classDiagram
 
 [on_startup.ps1](https://github.com/BigBIueWhale/llm_server_windows/blob/master/on_startup.ps1) automatically runs Ollama with environment variables:
 ```cmd
-OLLAMA_HOST=0.0.0.0 && set OLLAMA_KEEP_ALIVE=0 && set OLLAMA_FLASH_ATTENTION=1 && set OLLAMA_KV_CACHE_TYPE=q8_0
+OLLAMA_HOST=0.0.0.0 && set OLLAMA_KEEP_ALIVE=0 && set OLLAMA_FLASH_ATTENTION=1 && set OLLAMA_KV_CACHE_TYPE=q8_0 && set OLLAMA_NUM_PARALLEL=1
 ```
 
 Setting `OLLAMA_HOST=0.0.0.0` is important to allow everyone on the network to access the Ollama server (instead of localhost only).
@@ -83,6 +83,8 @@ Also, in any case we use a different model to generate the conversation title so
 
 Setting `OLLAMA_KV_CACHE_TYPE=q8_0` instead of the default `OLLAMA_KV_CACHE_TYPE=F16` is important to allow qwen models to fit entirely on GPU considering the large context lengths we're using.\
 This setting is only applied when using with `OLLAMA_FLASH_ATTENTION=1`.
+
+Setting `OLLAMA_NUM_PARALLEL=1` forces Ollama to only allow one loaded model at a time.
 
 ## Download WebUI Docker Image
 
