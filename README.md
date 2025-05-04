@@ -69,6 +69,21 @@ classDiagram
 
 9. Transfer your (now heavy) `llm_server_windows` folder to all of the AI computers (or just set up Ollama server if the computers are not running Windows 10/11). Run `double_click_install.bat` on each of those computers. This will turn the AI computers into reliable Ollama servers.
 
+## Ollama Configuration
+
+https://github.com/BigBIueWhale/llm_server_windows/on_startup.ps1 automatically runs Ollama with environment variables:
+```cmd
+OLLAMA_HOST=0.0.0.0 && set OLLAMA_KEEP_ALIVE=0 && set OLLAMA_FLASH_ATTENTION=1 && set OLLAMA_KV_CACHE_TYPE=q8_0
+```
+
+Setting `OLLAMA_HOST=0.0.0.0` is important to allow everyone on the network to access the Ollama server (instead of localhost only).
+
+Setting `OLLAMA_KEEP_ALIVE=0` is important because Ollama by default keeps the model loaded for 5 minutes, and the model weights become **"dirty"**. The response quality gets worse when the model hasn't been loaded / unloaded. So we force unload after every completion.\
+Also, in any case we use a different model to generate the conversation title so in any case the model might unload.
+
+Setting `OLLAMA_KV_CACHE_TYPE=q8_0` instead of the default `OLLAMA_KV_CACHE_TYPE=F16` is important to allow qwen models to fit entirely on GPU considering the large context lengths we're using.\
+This setting is only applied when using with `OLLAMA_FLASH_ATTENTION=1`.
+
 ## Download WebUI Docker Image
 
 1. Prepare an online Windows 10 computer (you can use a VMWare virtual machine).
@@ -199,6 +214,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
       | :--------------- | :--------------------------------------------------- |
       | `Context Length` | 8192                                                 |
       | `num_predict`    | -1                                                   |
+      | `num_gpu`        | 65                                                   |
       | `Description`    | `8k context- Alibaba coding model released Nov 2024` |
       | `Visibility`     |  Public                                              |
       | `Vision`         |  Off                                                 |
@@ -215,6 +231,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
       | `Top P`          | 0.8                                                  |
       | `Min P`          | 0                                                    |
       | `Repeat Penalty` | 1                                                    |
+      | `num_gpu`        | 49                                                   |
       | `System Prompt`  | `/no_think`                                          |
       | `Description`    | `14k context- Alibaba MoE model released April 2025` |
       | `Visibility`     |  Public                                              |
@@ -232,6 +249,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
       | `Top P`          | 0.95                                                          |
       | `Min P`          | 0                                                             |
       | `Repeat Penalty` | 1                                                             |
+      | `num_gpu`        | 49                                                            |
       | `Description`    | `18k context- Alibaba MoE thinking model released April 2025` |
       | `Visibility`     |  Public                                                       |
       | `Vision`         |  Off                                                          |
@@ -250,6 +268,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
       | `Top P`          | 0.8                                                   |
       | `Min P`          | 0                                                     |
       | `Repeat Penalty` | 1                                                     |
+      | `num_gpu`        | 65                                                    |
       | `System Prompt`  | `/no_think`                                           |
       | `Description`    | `8k context- Alibaba dense model released April 2025` |
       | `Visibility`     |  Public                                               |
@@ -267,6 +286,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
       | `Top P`          | 0.95                                                            |
       | `Min P`          | 0                                                               |
       | `Repeat Penalty` | 1                                                               |
+      | `num_gpu`        | 65                                                              |
       | `Description`    | `11k context- Alibaba dense thinking model released April 2025` |
       | `Visibility`     |  Public                                                         |
       | `Vision`         |  Off                                                            |
@@ -288,6 +308,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
       | `Top P`          | 0.95                                                                     |
       | `Min P`          | 0                                                                        |
       | `Repeat Penalty` | 1                                                                        |
+      | `num_gpu`        | 65                                                                       |
       | `System Prompt`  | `Low Reasoning Effort: You have extremely limited time to think and respond to the user’s query. Every additional second of processing and reasoning incurs a significant resource cost, which could affect efficiency and effectiveness. Your task is to prioritize speed without sacrificing essential clarity or accuracy. Provide the most direct and concise answer possible. Avoid unnecessary steps, reflections, verification, or refinements UNLESS ABSOLUTELY NECESSARY. Your primary goal is to deliver a quick, clear and correct response.` |
       | `Description`    | `8k context (less thinking)- Alibaba thinking model released March 2025` |
       | `Visibility`     |  Public                                                                  |
@@ -307,12 +328,21 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
       | `Top P`          | 0.95                                                               |
       | `Min P`          | 0                                                                  |
       | `Repeat Penalty` | 1                                                                  |
+      | `num_gpu`        | 65                                                                 |
       | `Description`    | `14k context (slower)- Alibaba thinking model released March 2025` |
       | `Visibility`     |  Public                                                            |
       | `Vision`         |  Off                                                               |
       | `Citations`      |  Off                                                               |
 
       The additional context is to accomodate the thinking. Also, qwen3 models have different recommended parameters in thinking / non thinking mode.
+
+## num_gpu (Ollama)
+
+Note: `num_gpu` parameter is a suggestion for the number of layers to offload to VRAM. Ideally, all layers will be running on GPU, but sometimes Ollama decides to arbitrarily place some of the layers of qwen models onto CPU, even though there's lots of available VRAM.
+
+Therefore, for qwen models we explicitly specify `num_gpu` parameter to be the number of layers of that model.
+
+If the number is incorrect- no harm no foul. Ollama will automatically revert to offloading a smaller number of layers if there's truly not enough VRAM.
 
 ## Access
 
