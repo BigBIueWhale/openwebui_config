@@ -260,14 +260,14 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
 
       | Parameter        | Value                                                           |
       | :--------------- | :-------------------------------------------------------------- |
-      | `Context Length` | 14000                                                           |
+      | `Context Length` | 11000                                                           |
       | `num_predict`    | -1                                                              |
       | `Temperature`    | 0.6                                                             |
       | `Top K`          | 20                                                              |
       | `Top P`          | 0.95                                                            |
       | `Min P`          | 0                                                               |
       | `Repeat Penalty` | 1                                                               |
-      | `Description`    | `14k context- Alibaba dense thinking model released April 2025` |
+      | `Description`    | `11k context- Alibaba dense thinking model released April 2025` |
       | `Visibility`     |  Public                                                         |
       | `Vision`         |  Off                                                            |
       | `Citations`      |  Off                                                            |
