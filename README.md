@@ -71,7 +71,7 @@ classDiagram
 
 ## Ollama Configuration
 
-https://github.com/BigBIueWhale/llm_server_windows/on_startup.ps1 automatically runs Ollama with environment variables:
+[on_startup.ps1](https://github.com/BigBIueWhale/llm_server_windows/blob/master/on_startup.ps1) automatically runs Ollama with environment variables:
 ```cmd
 OLLAMA_HOST=0.0.0.0 && set OLLAMA_KEEP_ALIVE=0 && set OLLAMA_FLASH_ATTENTION=1 && set OLLAMA_KV_CACHE_TYPE=q8_0
 ```
