@@ -166,7 +166,13 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
     qwq:32b-high
     ```
 
-2. Set the following settings for `codestral:22b`:
+2. Click `Settings Gear Icon` -> `Reset All Models` to reset existing model settings.
+
+3. The easy way- import [exported_model_configs.json](./exported_model_configs.json). Alternatively, manually input from the values in the [provided tables](#model-tables).
+
+## Model Tables
+
+1. Set the following settings for `codestral:22b`:
 
       | Parameter        | Value                                                    |
       | :--------------- | :------------------------------------------------------- |
@@ -182,7 +188,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
 
       These values are taken from https://medium.com/@givkashi/exploring-codestral-a-code-generation-model-from-mistral-ai-c94e18a551c3 and are actually very important so the model produces working code. I decided to change `Pepeat Penalty` to 1.04 so the model becomes less lazy.
 
-3. Set the following settings for `gemma3:27b`:
+2. Set the following settings for `gemma3:27b`:
 
       | Parameter        | Value                                                                            |
       | :--------------- | :------------------------------------------------------------------------------- |
@@ -195,7 +201,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
 
       num_predict is set to 8192 because Gemma natively has a [Total output context of 8192 tokens](https://huggingface.co/google/gemma-3-27b-it/blob/main/README.md#inputs-and-outputs). `Context Length` value is set to fit in a 24 GB VRAM GPU. The other required parameters are set by [Ollama's config file](https://ollama.com/library/gemma3:27b-it-q4_K_M/blobs/3116c5225075) so we don't need to explicitly set them.
 
-4. Set the following settings for `gemma3:4b`:
+3. Set the following settings for `gemma3:4b`:
 
       | Parameter        | Value                                                                             |
       | :--------------- | :-------------------------------------------------------------------------------- |
@@ -208,7 +214,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
 
       num_predict is set to 8192 because Gemma natively has a [Total output context of 8192 tokens](https://huggingface.co/google/gemma-3-4b-it/blob/main/README.md#inputs-and-outputs). `Context Length` value is set to fit in a 24 GB VRAM GPU. The other required parameters are set by [Ollama's config file](https://ollama.com/library/gemma3:4b/blobs/3116c5225075) so we don't need to explicitly set them.
 
-5. Set the following settings for `qwen2.5-coder:32b`:
+4. Set the following settings for `qwen2.5-coder:32b`:
 
       | Parameter        | Value                                                |
       | :--------------- | :--------------------------------------------------- |
@@ -220,7 +226,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
       | `Vision`         |  Off                                                 |
       | `Citations`      |  Off                                                 |
 
-6. Set the following settings for `qwen3:30b-a3b`:
+5. Set the following settings for `qwen3:30b-a3b`:
 
       | Parameter        | Value                                                |
       | :--------------- | :--------------------------------------------------- |
@@ -238,7 +244,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
       | `Vision`         |  Off                                                 |
       | `Citations`      |  Off                                                 |
 
-7. Set the following settings for `qwen3:30b-a3b-think`:
+6. Set the following settings for `qwen3:30b-a3b-think`:
 
       | Parameter        | Value                                                         |
       | :--------------- | :------------------------------------------------------------ |
@@ -257,7 +263,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
 
       The additional context is to accomodate the thinking.
 
-8. Set the following settings for `qwen3:32b`:
+7. Set the following settings for `qwen3:32b`:
 
       | Parameter        | Value                                                 |
       | :--------------- | :---------------------------------------------------- |
@@ -275,7 +281,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
       | `Vision`         |  Off                                                  |
       | `Citations`      |  Off                                                  |
 
-9. Set the following settings for `qwen3:32b-think`:
+8. Set the following settings for `qwen3:32b-think`:
 
       | Parameter        | Value                                                           |
       | :--------------- | :-------------------------------------------------------------- |
@@ -297,7 +303,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
       **This is the smartest model that can run on 24 GB VRAM.**\
       We use 14k context instead of the maximum supported: `Context Length: 40960` due to low VRAM.
 
-10. Set the following settings for `qwq:32b`:
+9. Set the following settings for `qwq:32b`:
 
       | Parameter        | Value                                                                    |
       | :--------------- | :----------------------------------------------------------------------- |
@@ -317,7 +323,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
 
       System prompt taken from https://www.reddit.com/r/LocalLLaMA/comments/1j4v3fi/comment/mgd2t3r and is used since `qwq:32b` doesn't natively support turning off / reducing thinking so this has to be done via prompt engineering.
 
-11. Set the following settings for `qwq:32b-high`:
+10. Set the following settings for `qwq:32b-high`:
 
       | Parameter        | Value                                                              |
       | :--------------- | :----------------------------------------------------------------- |
