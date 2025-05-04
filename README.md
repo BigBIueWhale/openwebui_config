@@ -81,7 +81,7 @@ Setting `OLLAMA_HOST=0.0.0.0` is important to allow everyone on the network to a
 Setting `OLLAMA_KEEP_ALIVE=0` is important because Ollama by default keeps the model loaded for 5 minutes, and the model weights become **"dirty"**. The response quality gets worse when the model hasn't been loaded / unloaded. So we force unload after every completion.\
 Also, in any case we use a different model to generate the conversation title so in any case the model might unload.
 
-Setting `OLLAMA_KV_CACHE_TYPE=q8_0` instead of the default `OLLAMA_KV_CACHE_TYPE=F16` is important to allow qwen models to fit entirely on GPU considering the large context lengths we're using.\
+Setting `OLLAMA_KV_CACHE_TYPE=q8_0` instead of the default `OLLAMA_KV_CACHE_TYPE=f16` is important to allow qwen models to fit entirely on GPU considering the large context lengths we're using.\
 This setting is only applied when using with `OLLAMA_FLASH_ATTENTION=1`.
 
 Setting `OLLAMA_NUM_PARALLEL=1` forces Ollama to only allow one loaded model at a time.
@@ -218,21 +218,21 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
 
 4. Set the following settings for `qwen2.5-coder:32b`:
 
-      | Parameter        | Value                                                |
-      | :--------------- | :--------------------------------------------------- |
-      | `Context Length` | 8192                                                 |
-      | `num_predict`    | -1                                                   |
-      | `num_gpu`        | 65                                                   |
-      | `Description`    | `8k context- Alibaba coding model released Nov 2024` |
-      | `Visibility`     |  Public                                              |
-      | `Vision`         |  Off                                                 |
-      | `Citations`      |  Off                                                 |
+      | Parameter        | Value                                                 |
+      | :--------------- | :---------------------------------------------------- |
+      | `Context Length` | 11000                                                 |
+      | `num_predict`    | -1                                                    |
+      | `num_gpu`        | 65                                                    |
+      | `Description`    | `11k context- Alibaba coding model released Nov 2024` |
+      | `Visibility`     |  Public                                               |
+      | `Vision`         |  Off                                                  |
+      | `Citations`      |  Off                                                  |
 
 5. Set the following settings for `qwen3:30b-a3b`:
 
       | Parameter        | Value                                                |
       | :--------------- | :--------------------------------------------------- |
-      | `Context Length` | 14000                                                |
+      | `Context Length` | 18000                                                |
       | `num_predict`    | -1                                                   |
       | `Temperature`    | 0.7                                                  |
       | `Top K`          | 20                                                   |
@@ -241,7 +241,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
       | `Repeat Penalty` | 1                                                    |
       | `num_gpu`        | 49                                                   |
       | `System Prompt`  | `/no_think`                                          |
-      | `Description`    | `14k context- Alibaba MoE model released April 2025` |
+      | `Description`    | `18k context- Alibaba MoE model released April 2025` |
       | `Visibility`     |  Public                                              |
       | `Vision`         |  Off                                                 |
       | `Citations`      |  Off                                                 |
@@ -263,25 +263,23 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
       | `Vision`         |  Off                                                          |
       | `Citations`      |  Off                                                          |
 
-      The additional context is to accomodate the thinking.
-
 7. Set the following settings for `qwen3:32b`:
 
-      | Parameter        | Value                                                 |
-      | :--------------- | :---------------------------------------------------- |
-      | `Context Length` | 8192                                                  |
-      | `num_predict`    | -1                                                    |
-      | `Temperature`    | 0.7                                                   |
-      | `Top K`          | 20                                                    |
-      | `Top P`          | 0.8                                                   |
-      | `Min P`          | 0                                                     |
-      | `Repeat Penalty` | 1                                                     |
-      | `num_gpu`        | 65                                                    |
-      | `System Prompt`  | `/no_think`                                           |
-      | `Description`    | `8k context- Alibaba dense model released April 2025` |
-      | `Visibility`     |  Public                                               |
-      | `Vision`         |  Off                                                  |
-      | `Citations`      |  Off                                                  |
+      | Parameter        | Value                                                  |
+      | :--------------- | :----------------------------------------------------- |
+      | `Context Length` | 11000                                                  |
+      | `num_predict`    | -1                                                     |
+      | `Temperature`    | 0.7                                                    |
+      | `Top K`          | 20                                                     |
+      | `Top P`          | 0.8                                                    |
+      | `Min P`          | 0                                                      |
+      | `Repeat Penalty` | 1                                                      |
+      | `num_gpu`        | 65                                                     |
+      | `System Prompt`  | `/no_think`                                            |
+      | `Description`    | `11k context- Alibaba dense model released April 2025` |
+      | `Visibility`     |  Public                                                |
+      | `Vision`         |  Off                                                   |
+      | `Citations`      |  Off                                                   |
 
 8. Set the following settings for `qwen3:32b-think`:
 
@@ -300,10 +298,8 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
       | `Vision`         |  Off                                                            |
       | `Citations`      |  Off                                                            |
 
-      The additional context is to accomodate the thinking. Also, qwen3 models have different recommended parameters in thinking / non thinking mode.
-
-      **This is the smartest model that can run on 24 GB VRAM.**\
-      We use 14k context instead of the maximum supported: `Context Length: 40960` due to low VRAM.
+      **This is the smartest model that can run on 24 GB VRAM as of April 4 2025.**\
+      We use 11k context with `OLLAMA_KV_CACHE_TYPE=q8_0` instead of the maximum supported: `Context Length: 40960` due to low VRAM at full context precision `OLLAMA_KV_CACHE_TYPE=f16`.
 
 9. Set the following settings for `qwq:32b`:
 
