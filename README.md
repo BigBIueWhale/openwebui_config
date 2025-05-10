@@ -361,7 +361,7 @@ If you have enough RAM (say, 32 or 64 gigabytes) but don't have a GPU with enoug
       set OLLAMA_HOST=0.0.0.0 && set OLLAMA_KEEP_ALIVE=0 && set OLLAMA_NUM_PARALLEL=1 && ollama.exe serve
       ```
       Meaning- no flash attention and no KV cache quantization.
-      You can expect to get ~10 tokens per second inference, and ~40 tokens per second prompt processing.
+      You can expect to get ~10 to 17 tokens per second inference, and ~40 to 60 tokens per second prompt processing.
 
 ## Access
 
