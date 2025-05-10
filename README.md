@@ -352,7 +352,7 @@ If the number is incorrect- no harm no foul. Ollama will automatically revert to
 
 If you have enough RAM (say, 32 or 64 gigabytes) but don't have a GPU with enough VRAM, you can still use this step.
 
-1. Use only `qwen3:30b-a3b` and `qwen3:30b-a3b-think`.
+1. Recommend to use only `qwen3:30b-a3b` and `qwen3:30b-a3b-think` for acceptable generation speed.
 
 2. In OpenWebUI admin page, disable explicit `num_gpu` specification for all qwen models.
 
