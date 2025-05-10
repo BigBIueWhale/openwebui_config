@@ -348,6 +348,21 @@ Therefore, for qwen models we explicitly specify `num_gpu` parameter to be the n
 
 If the number is incorrect- no harm no foul. Ollama will automatically revert to offloading a smaller number of layers if there's truly not enough VRAM.
 
+## Not Enough VRAM
+
+If you have enough RAM (say, 32 or 64 gigabytes) but don't have a GPU with enough VRAM, you can still use this step.
+
+1. Use only `qwen3:30b-a3b` and `qwen3:30b-a3b-think`.
+
+2. In OpenWebUI admin page, disable explicit `num_gpu` specification for all qwen models.
+
+3. Run ollama with
+      ```ps
+      set OLLAMA_HOST=0.0.0.0 && set OLLAMA_KEEP_ALIVE=0 && set OLLAMA_NUM_PARALLEL=1 && ollama.exe serve
+      ```
+      Meaning- no flash attention and no KV cache quantization.
+      You can expect to get ~10 tokens per second inference, and ~40 tokens per second prompt processing.
+
 ## Access
 
 On the local network, use the IP address of the PC where docker is installed and tell users to connect to `http://192.168.0.14:3000` (for example).
