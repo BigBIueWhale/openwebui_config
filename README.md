@@ -78,7 +78,7 @@ OLLAMA_HOST=0.0.0.0 && set OLLAMA_KEEP_ALIVE=0 && set OLLAMA_FLASH_ATTENTION=1 &
 
 Setting `OLLAMA_HOST=0.0.0.0` is important to allow everyone on the network to access the Ollama server (instead of localhost only).
 
-Setting `OLLAMA_KEEP_ALIVE=0` is important because Ollama by default keeps the model loaded for 5 minutes, and the KV cache becomes **"dirty"**. The response quality gets worse when the model hasn't been loaded / unloaded. So we force unload after every completion.\
+Setting `OLLAMA_KEEP_ALIVE=0` is important because Ollama by default keeps the model loaded for 5 minutes of inactivity, and the KV cache becomes **"dirty"**. The response quality gets worse when the model hasn't been loaded / unloaded. So we force unload after every completion.\
 Also, in any case we use a different model to generate the conversation title so in any case the model might unload.
 
 Setting `OLLAMA_KV_CACHE_TYPE=q8_0` instead of the default `OLLAMA_KV_CACHE_TYPE=f16` is important to allow qwen models to fit entirely on GPU considering the large context lengths we're using.\
