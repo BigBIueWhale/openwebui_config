@@ -356,7 +356,9 @@ If you have enough RAM (say, 32 or 64 gigabytes) but don't have a GPU with enoug
 
 2. In OpenWebUI admin page, disable explicit `num_gpu` specification for all qwen models.
 
-3. Run ollama with
+3. Counterintuitively, offloading some layers to GPU (say if you only have 4 gigabytes of VRAM) can hurt the tok/s inference speed performance. However for qwen models offloading some layers to GPU can significantly improve prompt ingestion speeds- specifically if your GPU is new enough (nvidia AMPERE architecture or above).
+
+4. Run ollama with
       ```ps
       set OLLAMA_HOST=0.0.0.0 && set OLLAMA_KEEP_ALIVE=0 && set OLLAMA_NUM_PARALLEL=1 && ollama.exe serve
       ```
