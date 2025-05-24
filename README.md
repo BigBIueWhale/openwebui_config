@@ -352,13 +352,14 @@ If the number is incorrect- no harm no foul. Ollama will automatically revert to
 
 If you have enough RAM (say, 32 or 64 gigabytes) but don't have a GPU with enough VRAM, you can still use this step.
 
-1. Recommend to use only `qwen3:30b-a3b` and `qwen3:30b-a3b-think` for acceptable generation speed.
+1. Recommend to use only `qwen3:30b-a3b` and `qwen3:30b-a3b-think` for acceptable generation speed.\
+    Which TBH is sad because `qwen3:32b-think` is **so much better**.
 
-2. In OpenWebUI admin page, disable explicit `num_gpu` specification for all qwen models.\
+3. In OpenWebUI admin page, disable explicit `num_gpu` specification for all qwen models.\
 
     Note: There's an issue in CPU-only mode: prompt ingestion is normally 400-800 tokens per second on GPU (almost immediate). Whereas on CPU there's normally no speedup for prompt ingestion. Counterintuitively, offloading some layers to GPU (say if you only have 4 gigabytes of VRAM) can hurt the tok/s inference speed performance compared to `num_gpu=0` (CPU-only). However for qwen models offloading some layers to GPU (say, 7 layers out of 65) can significantly improve prompt ingestion speeds- but only if your GPU is new enough (Nvidia AMPERE architecture or above) due to an optimization implemented in llama.cpp.
 
-3. Run ollama with
+4. Run ollama with
       ```ps
       set OLLAMA_HOST=0.0.0.0 && set OLLAMA_KEEP_ALIVE=0 && set OLLAMA_NUM_PARALLEL=1 && ollama.exe serve
       ```
