@@ -73,13 +73,12 @@ classDiagram
 
 [on_startup.ps1](https://github.com/BigBIueWhale/llm_server_windows/blob/master/on_startup.ps1) automatically runs Ollama with environment variables:
 ```cmd
-OLLAMA_HOST=0.0.0.0 && set OLLAMA_KEEP_ALIVE=0 && set OLLAMA_FLASH_ATTENTION=1 && set OLLAMA_KV_CACHE_TYPE=q8_0 && set OLLAMA_NUM_PARALLEL=1
+OLLAMA_HOST=0.0.0.0 && set OLLAMA_KEEP_ALIVE=-1 && set OLLAMA_FLASH_ATTENTION=1 && set OLLAMA_KV_CACHE_TYPE=q8_0 && set OLLAMA_NUM_PARALLEL=1
 ```
 
 Setting `OLLAMA_HOST=0.0.0.0` is important to allow everyone on the network to access the Ollama server (instead of localhost only).
 
-Setting `OLLAMA_KEEP_ALIVE=0` is important because Ollama by default keeps the model loaded for 5 minutes of inactivity, and the KV cache becomes **"dirty"**. The response quality gets worse when the model hasn't been loaded / unloaded. So we force unload after every completion.\
-Also, in any case we use a different model to generate the conversation title so in any case the model might unload.
+Setting `OLLAMA_KEEP_ALIVE=-1` is important because Ollama by default keeps the model loaded for only 5 minutes of inactivity.
 
 Setting `OLLAMA_KV_CACHE_TYPE=q8_0` instead of the default `OLLAMA_KV_CACHE_TYPE=f16` is important to allow qwen models to fit entirely on GPU considering the large context lengths we're using.\
 This setting is only applied when using with `OLLAMA_FLASH_ATTENTION=1`.
@@ -92,16 +91,16 @@ Setting `OLLAMA_NUM_PARALLEL=1` forces Ollama to only allow one loaded model at 
 
 2. Install docker on the online computer.
 
-3. Launch docker and set it up- install WSL2 if needed. Leave docker open while running docker commands in CMD.
+4. Launch docker and set it up- install WSL2 if needed. Leave docker open while running docker commands in CMD.
 
-4. Open CMD and run command `docker pull ghcr.io/open-webui/open-webui:main`.\
+5. Open CMD and run command `docker pull ghcr.io/open-webui/open-webui:main`.\
 I used OpenWebUI version 0.6.5 (April 2025). Command is taken from: https://docs.openwebui.com/getting-started/quick-start/
 
-5. Open a CMD window and navigate to a known folder, then run `docker save -o openwebui.docker ghcr.io/open-webui/open-webui:main` as mentioned [in forums online](https://serverfault.com/a/718470/1257167). This might take a few minutes.
+6. Open a CMD window and navigate to a known folder, then run `docker save -o openwebui.docker ghcr.io/open-webui/open-webui:main` as mentioned [in forums online](https://serverfault.com/a/718470/1257167). This might take a few minutes.
 
-6. Take the newly created `openwebui.docker` (4.5+ gigabytes)- with you to a server on your internal network.
+7. Take the newly created `openwebui.docker` (4.5+ gigabytes)- with you to a server on your internal network.
 
-7. Take that same docker installer `Docker Desktop Installer.exe` with you to a server on your internal network.
+8. Take that same docker installer `Docker Desktop Installer.exe` with you to a server on your internal network.
 
 ## Setup Load Balancer
 
@@ -140,7 +139,7 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
 
 1. Open Google Chrome at http://127.0.0.1:3000 with your admin login credentials.
 
-2. Navigate to `Settings` -> `Admin Settings` -> `Interface` -> `Set Task Model` -> `Local Models` and change the dropdown value from `Current Model` to `gemma3:4b`, **then click Save** at the bottom right. This is the model Ollama is gonna use for generating a title for each conversation. Reasoning models are no good for this task.
+2. Navigate to `Settings` -> `Admin Settings` -> `Interface` -> `Set Task Model` -> `Local Models` and change the dropdown value from `Current Model` to `qwen3:32b`, **then click Save** at the bottom right. This is the model Ollama is gonna use for generating a title for each conversation. Reasoning models are no good for this task so we choose the non-reasoning config for qwen3.
 
 3. In the same `Admin Settings` page, navigate to `Code Execution` -> `Enable Code Interpreter` and turn it off- it doesn't work very well IMO, **then click Save** at the bottom right.
 
@@ -355,13 +354,13 @@ If you have enough RAM (say, 32 or 64 gigabytes) but don't have a GPU with enoug
 1. Recommend to use only `qwen3:30b-a3b` and `qwen3:30b-a3b-think` for acceptable generation speed.\
     Which TBH is sad because `qwen3:32b-think` is **so much better**.
 
-3. In OpenWebUI admin page, disable explicit `num_gpu` specification for all qwen models.\
+3. In OpenWebUI admin page, disable explicit `num_gpu` specification for all qwen models.
 
     Note: There's an issue in CPU-only mode: prompt ingestion is normally 400-800 tokens per second on GPU (almost immediate). Whereas on CPU there's normally no speedup for prompt ingestion. Counterintuitively, offloading some layers to GPU (say if you only have 4 gigabytes of VRAM) can hurt the tok/s inference speed performance compared to `num_gpu=0` (CPU-only). However for qwen models offloading some layers to GPU (say, 7 layers out of 65) can significantly improve prompt ingestion speeds- but only if your GPU is new enough (Nvidia AMPERE architecture or above) due to an optimization implemented in llama.cpp.
 
 4. Run ollama with
       ```ps
-      set OLLAMA_HOST=0.0.0.0 && set OLLAMA_KEEP_ALIVE=0 && set OLLAMA_NUM_PARALLEL=1 && ollama.exe serve
+      set OLLAMA_HOST=0.0.0.0 && set OLLAMA_KEEP_ALIVE=-1 && set OLLAMA_NUM_PARALLEL=1 && ollama.exe serve
       ```
       Meaning- no flash attention and no KV cache quantization.
       You can expect to get ~10 to 17 tokens per second inference, and ~40 to 60 tokens per second prompt processing.
