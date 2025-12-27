@@ -91,21 +91,21 @@ Setting `OLLAMA_NUM_PARALLEL=1` forces Ollama to only allow one loaded model at 
 
 2. Install docker on the online computer.
 
-4. Launch docker and set it up- install WSL2 if needed. Leave docker open while running docker commands in CMD.
+3. Launch docker and set it up- install WSL2 if needed. Leave docker open while running docker commands in CMD.
 
-5. Open CMD and run command `docker pull ghcr.io/open-webui/open-webui:main`.\
-I used OpenWebUI version 0.6.5 (April 2025). Command is taken from: https://docs.openwebui.com/getting-started/quick-start/
+4. Open CMD and run command `docker pull ghcr.io/open-webui/open-webui:v0.6.25`. Command is taken from: [https://docs.openwebui.com/getting-started/quick-start/](https://docs.openwebui.com/getting-started/quick-start/)\
+    > Note: Historically I was using OpenWebUI version v0.6.5 (April 2025)
 
-6. Open a CMD window and navigate to a known folder, then run `docker save -o openwebui.docker ghcr.io/open-webui/open-webui:main` as mentioned [in forums online](https://serverfault.com/a/718470/1257167). This might take a few minutes.
+5. Open a CMD window and navigate to a known folder, then run `docker save -o openwebui.docker ghcr.io/open-webui/open-webui:v0.6.25` as mentioned [in forums online](https://serverfault.com/a/718470/1257167). This might take a few minutes.
 
-7. Take the newly created `openwebui.docker` (4.5+ gigabytes)- with you to a server on your internal network.
+6. Take the newly created `openwebui.docker` (4.5+ gigabytes)- with you to a server on your internal network.
 
-8. Take that same docker installer `Docker Desktop Installer.exe` with you to a server on your internal network.
+7. Take that same docker installer `Docker Desktop Installer.exe` with you to a server on your internal network.
 
 ## Setup Load Balancer
 
 1. Run an [ollama_load_balancer](https://github.com/BigBIueWhale/ollama_load_balancer/) docker instance on the local network. Use the [dockerfile configuration](https://github.com/BigBIueWhale/ollama_load_balancer/blob/master/README.md#docker) provided.\
-Make sure to Specify in the CLI arguments the IP addresses of each of the AI computers, and give them names. Make sure to pass flag `--timeout 60` to allow for prompt ingestion delays.
+   Make sure to Specify in the CLI arguments the IP addresses of each of the AI computers, and give them names. Make sure to pass flag `--timeout 60` to allow for prompt ingestion delays.
 
 2. Alternatively, run the load balancer without docker using the [precompiled release executables](https://github.com/BigBIueWhale/ollama_load_balancer/blob/master/README.md#release-notes).
 
@@ -121,11 +121,11 @@ Make sure to Specify in the CLI arguments the IP addresses of each of the AI com
 
 4. Create an instance of the docker image-
 
-    ```cmd
-    docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -e "OLLAMA_BASE_URL=http://host.docker.internal:11434" -e OFFLINE_MODE=True -v "open-webui:/openwebui_data/" --name open_webui --restart always ghcr.io/open-webui/open-webui:main
-    ```
+   ```cmd
+   docker run -d -p 127.0.0.1:3000:8080 --add-host=host.docker.internal:host-gateway -e "OLLAMA_BASE_URL=http://host.docker.internal:11434" -e OFFLINE_MODE=True -v /app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:v0.6.25
+   ```
 
-    OLLAMA_BASE_URL should point to the PC with the load balancer (or single Ollama server) running (could be this PC, in which case it's 127.0.0.1).
+   Note: I set my Ollama server running natively on the same PC as running this docker. The Ollama server is listening only on `OLLAMA_HOST=172.17.0.1:11434` (docker bridge)- even though it's not even running on docker.
 
     This command is based on https://docs.openwebui.com/getting-started/quick-start/
 
